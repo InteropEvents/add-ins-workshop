@@ -49,9 +49,9 @@ Get the Planner Task URL from your tenant:
 
 4. Create a test task and open it. In the "..." (ellipsis, upper right), click and select "Copy link to task". Paste the URL in Notepad. Save this <<(2) tenant-specific base URL>> for later in the code:
 
-![Create a test task](createtesttask.png)
+![Create a test task](images/createtesttask.png)
 
-![Open the test task](linktotask.png)
+![Open the test task](images/linktotask.png)
 
 5. Now, in a separate browser tab, open Graph Explorer using https://developer.microsoft.com/en-us/graph/graph-explorer and sign into your tenant with the big <<(3) left>> side button:
 
