@@ -57,7 +57,7 @@
 
 ![Open the test task](images/linktotask.png)
 
-5. Now, in a separate browser tab, open Graph Explorer using https://developer.microsoft.com/en-us/graph/graph-explorer and sign into your tenant with the big <<(3) left>> side button:
+5. Now, in a separate browser tab, open Graph Explorer using https://developer.microsoft.com/en-us/graph/graph-explorer and sign into your tenant with the big **left** side button:
 
 ![Log into Graph Explorer](images/logintographexplorer.png)
 
@@ -69,7 +69,7 @@
 
 ![Select Planner samples](images/selectplannersamples.png)
 
-8. Select the "GET all my Planner tasks" sample from the list and copy the "planId" and "bucketId" with their values from the results pane. Save these <<(4) planId and bucketId>> to Notepad, we will use these to update the code.
+8. Select the "GET all my Planner tasks" sample from the list and copy the "planId" and "bucketId" with their values from the results pane. Save these <<(3 & 4) planId and bucketId>> to Notepad, we will use these to update the code.
 
 ![Plan and bucket ids](images/bucketandplanids.png)
 
