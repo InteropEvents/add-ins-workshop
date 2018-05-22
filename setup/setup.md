@@ -1,5 +1,8 @@
 
-Register the application to use Graph:
+#Setup Instructions for Proseware Tasks Sample
+
+##Register the application to use Graph:
+
 1. Sign into the Application Registration Portal  (https://apps.dev.microsoft.com) using "work or school account".
 
 ![Sign in to your tenant](images/signintoyourtenant.png)
@@ -34,7 +37,8 @@ Register the application to use Graph:
 	
 12. Choose Save.
 
-Get the Planner Task URL from your tenant:
+##Get the Planner Task URL from your tenant:
+
 1. Log into your tenant
 
 ![Log into your tenant](images/tenantlogin.png)
@@ -69,7 +73,8 @@ Get the Planner Task URL from your tenant:
 
 ![Plan and bucket ids](images/bucketandplanids.png)
 
-Update the code for your tenant:
+##Update the code for your tenant:
+
 1. In the tasker.sln solution in Visual Studio, go to the top of taskerWeb/home.js
 2. There are four variables at the top of home.js that look like this:
 
@@ -85,6 +90,4 @@ var planId = "p9MJMuZW3U2azazF4jgKEmUABILd";
  
 3. Using the four numbers items in your Notepad file, update the initial values for these four variables.
 
-You are now ready to build the Proseware Tasks sample add-in!
-
-
+#You are now ready to build the Proseware Tasks sample add-in!
