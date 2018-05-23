@@ -1,6 +1,6 @@
-# Module 1: Office.js for Word
+# Module 1: Word API
 
-In this module, you will add Office.js code specific to Word. This code will add a content control to a selection in the Word edit session for a document. That content control is named with a binding ID and can then be the target of navigation to find it again.
+In this module, you will add javascript code specific to Word API for Office Add-ins. This code will add a content control to a selection in the Word edit session for a document. That content control is named with a binding ID and can then be the target of navigation to find it again.
 
 ## API's Used In This Module
 
