@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   height="20"
+   width="20"
+   xml:space="preserve"
+   viewBox="0 0 20 20"
+   y="0px"
+   x="0px"
+   id="Layer_1"
+   version="1.1"><metadata
+   id="metadata89"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs87" />
+<style
+   id="style2"
+   type="text/css">
+	.st0{opacity:0.4;fill:#231F20;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:#F5BA9D;}
+	.st3{fill:#949494;}
+	.st4{fill:#D04727;}
+	.st5{enable-background:new    ;}
+	.st6{clip-path:url(#SVGID_2_);}
+</style>
+
+<g
+   transform="matrix(0.45454545,0,0,0.45454545,-0.22727263,-0.9090908)"
+   id="g923"><g
+     id="_x34_8_1_">
+	<polygon
+   class="st0"
+   points="8,2 31.5,2 42,12.5 42,46 8,46 "
+   id="polygon4"
+   style="opacity:0.4;fill:#231f20" />
+	<polygon
+   class="st1"
+   points="31,3 41,13 41,45 9,45 9,3 "
+   id="polygon6"
+   style="fill:#ffffff" />
+	<g
+   id="g16">
+		<rect
+   x="12"
+   y="30"
+   class="st2"
+   width="26"
+   height="2"
+   id="rect8"
+   style="fill:#f5ba9d" />
+		<rect
+   x="12"
+   y="34"
+   class="st2"
+   width="26"
+   height="2"
+   id="rect10"
+   style="fill:#f5ba9d" />
+		<rect
+   x="12"
+   y="38"
+   class="st2"
+   width="26"
+   height="2"
+   id="rect12"
+   style="fill:#f5ba9d" />
+		<rect
+   x="14"
+   y="30"
+   class="st1"
+   width="2"
+   height="10"
+   id="rect14"
+   style="fill:#ffffff" />
+	</g>
+	<path
+   class="st3"
+   d="m 25,9 c -5,0 -9,4 -9,9 0,5 4,9 9,9 5,0 9,-4 9,-9 h -9 z"
+   id="path18"
+   style="fill:#949494" />
+	<path
+   class="st2"
+   d="m 27,7 v 9 h 9 C 36,11 32,7 27,7 Z"
+   id="path20"
+   style="fill:#f5ba9d" />
+	<polygon
+   class="st1"
+   points="32,4 40,12 32,12 "
+   id="polygon22"
+   style="fill:#ffffff" />
+	<polygon
+   class="st0"
+   points="31,13 32,13 41,13 40.3,12 32,12 32,3.8 31,3 31,12 "
+   id="polygon24"
+   style="opacity:0.4;fill:#231f20" />
+</g><g
+     id="_x34_8_6_">
+	<polygon
+   class="st1"
+   points="9,15.7 9,41.3 22,43.2 22,13.8 "
+   id="polygon27"
+   style="fill:#ffffff" />
+	<polygon
+   class="st4"
+   points="21,15 21,42 3,39.4 3,17.6 "
+   id="polygon29"
+   style="fill:#d04727" />
+	<g
+   id="g51">
+		<g
+   id="g49">
+			<g
+   class="st5"
+   id="g47"
+   style="enable-background:new">
+				<defs
+   id="defs32">
+					<polygon
+   id="SVGID_1_"
+   class="st5"
+   points="15.9,23.1 15.9,34 9.1,34 9.1,23.2 "
+   style="enable-background:new" />
+				</defs>
+				<clipPath
+   id="SVGID_2_">
+					<use
+   xlink:href="#SVGID_1_"
+   style="overflow:visible"
+   id="use34"
+   x="0"
+   y="0"
+   width="100%"
+   height="100%" />
+				</clipPath>
+				<g
+   class="st6"
+   clip-path="url(#SVGID_2_)"
+   id="g45">
+					<g
+   id="g43">
+						<g
+   id="g41">
+							<g
+   id="g39">
+								<path
+   class="st1"
+   d="M 11.2,28.4 V 25 H 12 c 0.3,0 0.5,0 0.7,0.1 0.2,0.1 0.4,0.2 0.5,0.3 0.1,0.1 0.2,0.3 0.3,0.5 0.1,0.2 0.1,0.5 0.1,0.7 0,0.3 0,0.5 -0.1,0.8 -0.1,0.2 -0.2,0.4 -0.3,0.5 -0.1,0.1 -0.3,0.2 -0.5,0.3 -0.2,0.1 -0.5,0.1 -0.7,0.1 l -0.8,0.1 m 1.2,-5.3 H 9.1 v 10.8 h 2.1 v -3.7 h 1 c 0.2,0 0.4,0 0.5,0 0.2,0 0.3,0 0.5,-0.1 0.2,0 0.3,-0.1 0.5,-0.1 0.2,-0.1 0.3,-0.1 0.4,-0.2 0.1,-0.1 0.3,-0.2 0.4,-0.2 0.1,-0.1 0.2,-0.2 0.4,-0.3 0.1,-0.1 0.2,-0.2 0.3,-0.3 0.1,-0.1 0.2,-0.3 0.3,-0.4 0.1,-0.1 0.1,-0.3 0.2,-0.4 0.1,-0.1 0.1,-0.3 0.1,-0.5 0,-0.2 0.1,-0.3 0.1,-0.5 0,-0.2 0,-0.3 0,-0.5 0,-0.6 -0.1,-1.1 -0.2,-1.5 -0.1,-0.4 -0.4,-0.8 -0.7,-1.1 -0.3,-0.3 -0.7,-0.5 -1.1,-0.6 -0.4,-0.3 -1,-0.4 -1.5,-0.4"
+   id="path37"
+   style="fill:#ffffff" />
+							</g>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</g></g>
+<g
+   transform="translate(0,-28)"
+   id="g54">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g56">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g58">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g60">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g62">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g64">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g66">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g68">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g70">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g72">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g74">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g76">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g78">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g80">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g82">
+</g>
+</svg>

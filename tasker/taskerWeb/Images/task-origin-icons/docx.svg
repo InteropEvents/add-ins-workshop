@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   height="20"
+   width="20"
+   xml:space="preserve"
+   viewBox="0 0 20 20"
+   y="0px"
+   x="0px"
+   id="Layer_1"
+   version="1.1"><metadata
+   id="metadata90"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs88" />
+<style
+   id="style2"
+   type="text/css">
+	.st0{opacity:0.4;fill:#231F20;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:#999999;}
+	.st3{fill:#2B579A;}
+	.st4{enable-background:new    ;}
+	.st5{clip-path:url(#SVGID_2_);}
+</style>
+
+
+
+
+
+<g
+   transform="matrix(0.45454545,0,0,0.45454545,-0.22727263,-0.9090908)"
+   id="g924"><polygon
+     style="opacity:0.4;fill:#231f20"
+     class="st0"
+     points="42,12.5 42,46 8,46 8,2 31.5,2 "
+     id="polygon4" /><polygon
+     style="fill:#ffffff"
+     class="st1"
+     points="41,45 9,45 9,3 31,3 41,13 "
+     id="polygon6" /><g
+     id="g22">
+	<rect
+   x="12"
+   y="14"
+   class="st2"
+   width="26"
+   height="2"
+   id="rect8"
+   style="fill:#999999" />
+	<rect
+   x="12"
+   y="9"
+   class="st2"
+   width="21"
+   height="2"
+   id="rect10"
+   style="fill:#999999" />
+	<rect
+   x="12"
+   y="19"
+   class="st2"
+   width="26"
+   height="2"
+   id="rect12"
+   style="fill:#999999" />
+	<rect
+   x="12"
+   y="29"
+   class="st2"
+   width="26"
+   height="2"
+   id="rect14"
+   style="fill:#999999" />
+	<rect
+   x="12"
+   y="24"
+   class="st2"
+   width="26"
+   height="2"
+   id="rect16"
+   style="fill:#999999" />
+	<rect
+   x="12"
+   y="39"
+   class="st2"
+   width="26"
+   height="2"
+   id="rect18"
+   style="fill:#999999" />
+	<rect
+   x="12"
+   y="34"
+   class="st2"
+   width="26"
+   height="2"
+   id="rect20"
+   style="fill:#999999" />
+</g><polygon
+     style="fill:#ffffff"
+     class="st1"
+     points="32,4 40,12 32,12 "
+     id="polygon24" /><polygon
+     style="opacity:0.4;fill:#231f20"
+     class="st0"
+     points="32,3.8 31,3 31,12 31,13 32,13 41,13 40.3,12 32,12 "
+     id="polygon26" /><g
+     id="_x34_8_1_">
+	<polygon
+   class="st1"
+   points="9,14 9,41.3 22,43.2 22,13.8 "
+   id="polygon28"
+   style="fill:#ffffff" />
+	<polygon
+   class="st3"
+   points="21,15 21,42 3,39.4 3,17.6 "
+   id="polygon30"
+   style="fill:#2b579a" />
+	<g
+   id="g52">
+		<g
+   id="g50">
+			<g
+   class="st4"
+   id="g48"
+   style="enable-background:new">
+				<defs
+   id="defs33">
+					<polygon
+   id="SVGID_1_"
+   class="st4"
+   points="18.8,23.1 18.8,34 5.7,34 5.7,23.2 "
+   style="enable-background:new" />
+				</defs>
+				<clipPath
+   id="SVGID_2_">
+					<use
+   xlink:href="#SVGID_1_"
+   style="overflow:visible"
+   id="use35"
+   x="0"
+   y="0"
+   width="100%"
+   height="100%" />
+				</clipPath>
+				<g
+   class="st5"
+   clip-path="url(#SVGID_2_)"
+   id="g46">
+					<g
+   id="g44">
+						<g
+   id="g42">
+							<g
+   id="g40">
+								<polyline
+   class="st1"
+   points="18.8,23.1 16.7,23.1 15.3,31.2 15.2,31.2 13.6,23.1 11.3,23.2 9.5,31.1 9.4,31.1 8,23.2           5.7,23.2 8.1,34 10.5,34 12.3,26.3 12.3,26.3 14,34 16.3,34 18.8,23.1         "
+   id="polyline38"
+   style="fill:#ffffff" />
+							</g>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</g></g>
+<g
+   transform="translate(0,-28)"
+   id="g55">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g57">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g59">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g61">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g63">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g65">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g67">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g69">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g71">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g73">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g75">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g77">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g79">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g81">
+</g>
+<g
+   transform="translate(0,-28)"
+   id="g83">
+</g>
+</svg>
