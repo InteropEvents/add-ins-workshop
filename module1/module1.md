@@ -1,6 +1,6 @@
-# Module 1: Office.js for Word
+# Module 1: Word API
 
-In this module, you will add Office.js code specific to Word. This code will add a content control to a selection in the Word edit session for a document. That content control is named with a binding ID and can then be the target of navigation to find it again.
+In this module, you will add javascript code specific to Word API for Office Add-ins. This code will add a content control to a selection in the Word edit session for a document. That content control is named with a binding ID and can then be the target of navigation to find it again.
 
 ## API's Used In This Module
 
@@ -27,7 +27,7 @@ Notice that we are now inside a switch statement that identifies the "Host" of t
 
 ```js
                 Word.run(function (context) {
-                }
+                });
 ```
 
 Everything we do to the document using Word javascript API's will happen inside this block.
@@ -47,11 +47,68 @@ Everything we do to the document using Word javascript API's will happen inside 
                         }
                     });
 
-                }
+                // Word.run
+                }).catch(function (error) {
+
+                    var errormsg = 'Error: ' + JSON.stringify(error);
+                    console.log(errormsg);
+                    if (error instanceof OfficeExtension.Error) {
+                        var errormsg = errormsg + ', Debug info: ' + JSON.stringify(error.debugInfo);
+                        showNotification('addFromSelectionAsync', errormsg);
+                        console.log(errormsg);
+                    }
+
+                });
+
 ```
-At this point, we have made a binding, named with a value computed previously and with which we will later be able to navigate in the document.
+At this point, we have made a binding, named with a computed previously value (uniqueBindId) and which we can later use to navigate in the document. We also added a catch call on the result of Word.run so we know if something went wrong in any of the code in Word.run.
 
-4. Add a call to getSelection so we can create a content control around it.
+4. Following the addFromSelectionAsync call, add a call to getSelection so we can create a content control around it.
 
+```js
+                    // Queue a command to get the current selection and then
+                    // create a proxy range object with the results.
+                    range = context.document.getSelection();
+```
 
+5. When an Office.js object is handed to us from an API call, this is usually a proxy object in which property values are not yet populated fully. We must call the object's load() method to queue a command to Office to load the property values. Let's follow this call with a call to load the "style" property on the selection. This will allow us to keep the same style when inserting the content control around the text.
 
+```js
+                    range.load("style");
+```
+
+6. Before we can use the range object to create a ContentControl and insert it into the document, we need to synchronize the proxy object with Word on the backend. After the range.load() call, add the following context.sync() call:
+
+```js
+                    // Synchronize the document state by executing the queued commands,
+                    // and return a promise to indicate task completion.
+                    return context.sync().then(function () {
+
+                        // Queue a commmand to insert a content control around the selected text,
+                        // and create a proxy content control object. We'll update the properties
+                        // on the content control.
+                        var myContentControl = range.insertContentControl();
+                        myContentControl.tag = uniqueBindId;
+                        myContentControl.title = title;
+                        myContentControl.style = range.style;
+                        myContentControl.cannotEdit = false;
+
+                        //context.trackedObjects.remove(range);
+                        return context.sync().then(function () {
+
+                            //showNotification('addFromSelectionAsync', 'Wrapped a content control around the selected text.');
+                            console.log('Wrapped a content control around the selected text.');
+
+                        });
+                    });
+```
+
+In this block, a lot is going on. We use the range object to insertContentControl and then set some properties on the content control. We tag the content control with our uniqueBindId so we can locate it and navigate to it. We give it a title, keep the style the same as the original range selection, and allow the user to edit the text within the content control. 
+
+Notice that we have an embedded context.sync(). Because we made changes to a proxy object that came back from insertContentControl, we need to call context.sync() to synchronize with Word's backend. 
+
+The .then function on the context.sync() allows us to run code when the asynchronous context.sync finishes. 
+
+We are now done adding the Word-specific code to our add-in. 
+
+7. When you test the add-in inside word, create a task and you will now see a content control being added. You will also notice that selecting the task in the task list view causes navigation to the content control. Cool!
