@@ -27,4 +27,10 @@ Tasks can be created and assigned as well as managed in a simple but powerful li
     - Set taskerWeb to the default startup project
     - Start without debugging (Ctrl-F5) to run IISExpress hosting the web code.
 
+    TIP: avoid path length issues with packages by cloning the repo low in the file hierarchy like c:\myrepos or something. 
+
 4. Side load this add-in using the tasker/tasker/taskerManifest/tasker.xml. Refer to [Sideload Office Add-ins for testing](https://docs.microsoft.com/en-us/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins) for instructions on sideloading.
+
+5. Now you are ready to follow the tutorial. Start with [Module 1](module1/module1.md). This walks through adding Word specific code to task creation process in Proseware Tasks.
+
+6. Then complete the tutorial by following [Module 2](module2/module2.md). This adds Excel specific code.  
