@@ -21,3 +21,10 @@ Tasks can be created and assigned as well as managed in a simple but powerful li
 1. Start by cloning this whole repo to your local system.
 
 2. Next get your tenant and Planner ready for the add-in by following the steps in [the setup document.](setup/setup.md) 
+
+3. At this point, you can open tasker.sln in Visual Studio and build it. 
+    - You may need to restore nuget packages. Refer to [Package Restore](https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore) 
+    - Set taskerWeb to the default startup project
+    - Start without debugging (Ctrl-F5) to run IISExpress hosting the web code.
+
+4. Side load this add-in using the tasker/tasker/taskerManifest/tasker.xml. Refer to [Sideload Office Add-ins for testing](https://docs.microsoft.com/en-us/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins) for instructions on sideloading.
