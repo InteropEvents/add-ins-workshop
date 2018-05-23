@@ -11,7 +11,7 @@
 
 ![My applications](images/myapplications.png)
 
-3. Click on the "Add and app" button.
+3. Click on the "Add an app" button.
 
 4. Enter the name for the app as "Proseware Tasks", and choose Create application.
 
@@ -26,6 +26,7 @@
 7. Under Platforms, choose Add Platform.
 	
 ![Add a Platform](images/addaplatform.png)
+
 8. Choose Web.
 	
 ![Choose Web Platform](images/choosewebplatform.png)
@@ -57,7 +58,7 @@
 
 ![Open the test task](images/linktotask.png)
 
-5. Now, in a separate browser tab, open Graph Explorer using https://developer.microsoft.com/en-us/graph/graph-explorer and sign into your tenant with the big **left** side button:
+5. Now, in a separate browser tab, open Graph Explorer using https://developer.microsoft.com/en-us/graph/graph-explorer and sign into your tenant with the big **left** side button titled, "**Sign in with Microsoft**":
 
 ![Log into Graph Explorer](images/logintographexplorer.png)
 
@@ -80,13 +81,13 @@
 
 ```js
 // Per tenant variables to update when building against a new tenant.
-// AppId from Application Registration Portal
+// (1) AppId from Application Registration Portal
 var azureAppId = "<<appid goes here>>";
-// Planner task's tenant-specific base URL. Get this from Planner with an open task.
+// (2) Planner task's tenant-specific base URL. Get this from Planner with an open task.
 var plannerTaskUrl = "https://tasks.office.com/jebosoft.onmicrosoft.com/en-US/Home/Task/";
-// Bucket ID for the tasks we create.
+// (3) Bucket ID for the tasks we create.
 var bucketId = "3LsaqpPwQUqvc_12lZ3-YGUAHdR_";
-// Plan ID for the plan we created.
+// (4) Plan ID for the plan we created.
 var planId = "p9MJMuZW3U2azazF4jgKEmUABILd";
 ``` 
 
