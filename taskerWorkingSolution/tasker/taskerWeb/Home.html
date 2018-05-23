@@ -1,0 +1,567 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Word Add-In with Commands Sample</title>
+
+    <!--<script src="Scripts/jquery-1.9.1.js" type="text/javascript"></script>-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="Scripts/FabricUI/MessageBanner.js" type="text/javascript"></script>
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
+    <script type="text/javascript" src="..\..\msgraph-sdk-javascript\lib\graph-js-sdk-web.js"></script>
+    <!-- To enable offline debugging using a local reference to Office.js, use:                        -->
+    <!-- <script src="Scripts/Office/MicrosoftAjax.js" type="text/javascript"></script>  -->
+    <!-- <script src="Scripts/Office/1/office.js" type="text/javascript"></script>  -->
+
+    <link href="Home.css" rel="stylesheet" type="text/css" />
+    <script src="Home.js" type="text/javascript"></script>
+
+    <!-- Office JavaScript API Helpers (via CDN) -->
+    <script src="https://unpkg.com/@microsoft/office-js-helpers@0.6.0/dist/office.helpers.min.js"></script>
+
+    <!-- For the Office UI Fabric, go to https://aka.ms/office-ui-fabric to learn more. -->
+    <!--<link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.min.css">
+    <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.components.min.css">-->
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/css/fabric.min.css" />
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/css/fabric.components.min.css" />
+    <script src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/js/fabric.min.js"></script>
+    <script src=".\Scripts\pickadate.js-3.5.3\pickadate.js-3.5.3\lib\picker.js"></script>
+    <script src=".\Scripts\pickadate.js-3.5.3\pickadate.js-3.5.3\lib\picker.date.js"></script>
+    <!--<script src="graphhelpersdk.js" type="text/javascript"></script>-->
+
+    <!-- To enable the offline use of Office UI Fabric, use: -->
+    <!-- link rel="stylesheet" href="Content/fabric.min.css" -->
+    <!-- link rel="stylesheet" href="Content/fabric.components.min.css" -->
+    <!--<link rel="stylesheet" href="SearchBox.css">
+    <script type="text/javascript" src="Jquery.SearchBox.js"></script>-->
+    <!--<script type="text/javascript" src="SearchBox.js"></script>-->
+    <!--<link rel="stylesheet" href="Dropdown.css">
+    <script type="text/javascript" src="Jquery.Dropdown.js"></script>-->
+    <!-- Task search box and dropdown styles -->
+
+    <style type="text/css">
+        h1 {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 5px;
+            height: auto;
+            background-color: #0072BB;
+            color: #ffffff;
+            font-family: 'Segoe UI', Arial, Tahoma;
+            font-weight: 100;
+        }
+        /* Demo contextual menu CSS */
+        .ms-ContextualMenu.is-open {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .ms-ListItem-primaryText {
+            font-size: 16px;
+        }
+
+        .ms-ListItem-secondaryText {
+            padding-left: 22px;
+        }
+
+        .ms-ListItem-tertiaryText {
+            padding-top: 5px;
+            padding-left: 22px;
+        }
+
+        .ms-ListItem {
+            padding-top: 9px;
+            padding-right: 5px;
+            padding-bottom: 3px;
+            padding-left: 5px;
+        }
+
+        .ms-Dialog {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        #componentWrapper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ms-NavBar-item .ms-ContextualMenu {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="content-main">
+        <div class="padding">
+            <div>
+                <div><label id="labelMe" class="ms-Label" style="display: none; padding-bottom: 20px"></label></div>
+                <button id="signInBtn" class="ms-Button ms-Button--primary">
+                    <span class="ms-Button-label">Sign in</span>
+                </button>
+                <div id="spinnerLoading" class="ms-Spinner ms-Spinner--large" style="display: none; padding-bottom: 20px">
+                    <div class="ms-Spinner-label">
+                        Loading tasks...
+                    </div>
+                </div>
+                <div id="spinnerUpdating" class="ms-Spinner ms-Spinner--large" style="display: none; padding-bottom: 20px">
+                    <div class="ms-Spinner-label">
+                        Updating tasks...
+                    </div>
+                </div>
+                <div id="spinnerAdding" class="ms-Spinner ms-Spinner--large" style="display: none; padding-bottom: 20px">
+                    <div class="ms-Spinner-label">
+                        Adding task...
+                    </div>
+                </div>
+                <div id="pivotContainer" class="ms-Pivot ms-Pivot--tabs" style="display: none">
+                    <ul class="ms-Pivot-links">
+                        <li class="ms-Pivot-link is-selected" data-content="tasks" title="My tasks" tabindex="1">
+                            My tasks
+                        </li>
+                        <li class="ms-Pivot-link " data-content="create" title="New Task" tabindex="1">
+                            Create a new task
+                        </li>
+                        <!--<li class="ms-Pivot-link" tabindex="1">
+                            <i class="ms-Pivot-ellipsis ms-Icon ms-Icon--More"></i>
+                        </li>-->
+                    </ul>
+                    <div id="divTaskListView" class="ms-Pivot-content" data-content="tasks">
+                        <div class="ms-ProgressIndicator tooltip">
+                            <div class="ms-ProgressIndicator-itemName" style="visibility:hidden">% Tasks complete</div>
+                            <div class="ms-ProgressIndicator-itemProgress">
+                                <div class="ms-ProgressIndicator-progressTrack"></div>
+                                <div class="ms-ProgressIndicator-progressBar "><span id="progressBarTooltip" class="tooltiptext">Completed tasks as a percentage of total.</span></div>
+                            </div>
+                            <div id="progressCompleteDescription" style="display:none" class="ms-ProgressIndicator-itemDescription">Completed tasks as a percentage of total.</div>
+                        </div>
+                        <div class="ms-Toggle">
+                            <span class="ms-Toggle-description">All documents</span>
+                            <input type="checkbox" id="toggleAllDocs" class="ms-Toggle-input" />
+                            <label for="toggleAllDocs" class="ms-Toggle-field" tabindex="0">
+                                <span class="ms-Label ms-Label--off">Off</span>
+                                <span class="ms-Label ms-Label--on">On</span>
+                            </label>
+                        </div> <!-- // ms-Toggle -->
+                        <ul class="ms-List" id="mytasks_list">
+                            <!-- We dynamically build the list of tasks here. -->
+                        </ul>
+                    </div> <!-- // ms-Pivot-content -->
+                    <div class="ms-Pivot-content" data-content="create">
+                        <!--<div class="ms-FacePile">
+                            <button class="ms-FacePile-addButton ms-FacePile-addButton--addPerson">
+                                <i class="ms-FacePile-addPersonIcon ms-Icon ms-Icon--AddFriend"></i>
+                            </button>
+                            <div class="ms-Persona ms-Persona--facePile">
+                                <div class="ms-Persona-imageArea">
+                                    <div class="ms-Persona-initials ms-Persona-initials--blue">AL</div>
+                                    <img class="ms-Persona-image" src="https://dev.office.com/fabric-js/Components/persona/Persona.Person2.png">
+                                </div>
+                                <div class="ms-Persona-presence">
+                                </div>
+                                <div class="ms-Persona-details">
+                                    <div class="ms-Persona-primaryText">Alton Lafferty</div>
+                                    <div class="ms-Persona-secondaryText">Accountant</div>
+                                </div>
+                                <div class="ms-PersonaCard">
+                                    <div class="ms-PersonaCard-persona">
+                                        <div class="ms-Persona ms-Persona--lg">
+                                            <div class="ms-Persona-imageArea">
+                                                <div class="ms-Persona-initials ms-Persona-initials--blue">AL</div>
+                                                <img class="ms-Persona-image" src="https://dev.office.com/fabric-js/Components/persona/Persona.Person2.png">
+                                            </div>
+                                            <div class="ms-Persona-presence">
+                                            </div>
+                                            <div class="ms-Persona-details">
+                                                <div class="ms-Persona-primaryText">Alton Lafferty</div>
+                                                <div class="ms-Persona-secondaryText">Accountant</div>
+                                                <div class="ms-Persona-tertiaryText">In a meeting</div>
+                                                <div class="ms-Persona-optionalText">Available at 4:00pm</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="ms-PersonaCard-actions">
+                                        <li data-action-id="chat" class="ms-PersonaCard-action" tabindex="1">
+                                            <i class="ms-Icon ms-Icon--Chat"></i>
+                                        </li>
+                                        <li data-action-id="phone" class="ms-PersonaCard-action is-active" tabindex="2">
+                                            <i class="ms-Icon ms-Icon--Phone"></i>
+                                        </li>
+                                        <li data-action-id="video" class="ms-PersonaCard-action" tabindex="3">
+                                            <i class="ms-Icon ms-Icon--Video"></i>
+                                        </li>
+                                        <li data-action-id="mail" class="ms-PersonaCard-action" tabindex="4">
+                                            <i class="ms-Icon ms-Icon--Mail"></i>
+                                        </li>
+                                        <li class="ms-PersonaCard-overflow" alt="View profile in Delve" title="View profile in Delve">View profile</li>
+                                        <li data-action-id="org" class="ms-PersonaCard-action ms-PersonaCard-orgChart" tabindex="5">
+                                            <i class="ms-Icon ms-Icon--Org"></i>
+                                        </li>
+                                    </ul>
+                                    <div class="ms-PersonaCard-actionDetailBox">
+                                        <div data-detail-id="mail" class="ms-PersonaCard-details">
+                                            <div class="ms-PersonaCard-detailLine">
+                                                <span class="ms-PersonaCard-detailLabel">Personal:</span>
+                                                <a class="ms-Link" href="mailto:alton.lafferty@outlook.com">alton.lafferty@outlook.com</a>
+                                            </div>
+                                            <div class="ms-PersonaCard-detailLine">
+                                                <span class="ms-PersonaCard-detailLabel">Work:</span>
+                                                <a class="ms-Link" href="mailto:alton.lafferty@outlook.com">altonlafferty@contoso.com</a>
+                                            </div>
+                                        </div>
+                                        <div data-detail-id="chat" class="ms-PersonaCard-details">
+                                            <div class="ms-PersonaCard-detailLine">
+                                                <span class="ms-PersonaCard-detailLabel">Lync:</span>
+                                                <a class="ms-Link" href="#">Start Lync call</a>
+                                            </div>
+                                        </div>
+                                        <div data-detail-id="phone" class="ms-PersonaCard-details">
+                                            <div class="ms-PersonaCard-detailExpander"></div>
+                                            <div class="ms-PersonaCard-detailLine">
+                                                <span class="ms-PersonaCard-detailLabel">Details</span>
+                                            </div>
+                                            <div class="ms-PersonaCard-detailLine">
+                                                <span class="ms-PersonaCard-detailLabel">Personal:</span>  555.206.2443
+                                            </div>
+                                            <div class="ms-PersonaCard-detailLine">
+                                                <span class="ms-PersonaCard-detailLabel">Work:</span>  555.929.8240
+                                            </div>
+                                        </div>
+                                        <div data-detail-id="video" class="ms-PersonaCard-details">
+                                            <div class="ms-PersonaCard-detailLine">
+                                                <span class="ms-PersonaCard-detailLabel">Skype:</span>
+                                                <a class="ms-Link" href="#">Start Skype call</a>
+                                            </div>
+                                        </div>
+                                        <div data-detail-id="org" class="ms-PersonaCard-details">
+                                            <div class="ms-OrgChart">
+                                                <div class="ms-OrgChart-group">
+                                                    <ul class="ms-OrgChart-list">
+                                                        <li class="ms-OrgChart-listItem">
+                                                            <button class="ms-OrgChart-listItemBtn" tabindex="1">
+                                                                <div class="ms-Persona">
+                                                                    <div class="ms-Persona-imageArea">
+                                                                        <div class="ms-Persona-initials ms-Persona-initials--blue">RM</div>
+                                                                        <img class="ms-Persona-image" src="https://dev.office.com/fabric-js/Components/persona/Persona.Person2.png">
+                                                                    </div>
+                                                                    <div class="ms-Persona-presence">
+                                                                    </div>
+                                                                    <div class="ms-Persona-details">
+                                                                        <div class="ms-Persona-primaryText">Russel Miller</div>
+                                                                        <div class="ms-Persona-secondaryText">Sales</div>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+                                                        </li>
+                                                        <li class="ms-OrgChart-listItem">
+                                                            <button class="ms-OrgChart-listItemBtn" tabindex="1">
+                                                                <div class="ms-Persona">
+                                                                    <div class="ms-Persona-imageArea">
+                                                                        <div class="ms-Persona-initials ms-Persona-initials--blue">RM</div>
+                                                                        <img class="ms-Persona-image" src="https://dev.office.com/fabric-js/Components/persona/Persona.Person2.png">
+                                                                    </div>
+                                                                    <div class="ms-Persona-presence">
+                                                                    </div>
+                                                                    <div class="ms-Persona-details">
+                                                                        <div class="ms-Persona-primaryText">Douglas Fielder</div>
+                                                                        <div class="ms-Persona-secondaryText">Public Relations</div>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="ms-OrgChart-group">
+                                                    <div class="ms-OrgChart-groupTitle">Manager</div>
+                                                    <ul class="ms-OrgChart-list">
+                                                        <li class="ms-OrgChart-listItem">
+                                                            <button class="ms-OrgChart-listItemBtn" tabindex="1">
+                                                                <div class="ms-Persona">
+                                                                    <div class="ms-Persona-imageArea">
+                                                                        <div class="ms-Persona-initials ms-Persona-initials--blue">RM</div>
+                                                                        <img class="ms-Persona-image" src="https://dev.office.com/fabric-js/Components/persona/Persona.Person2.png">
+                                                                    </div>
+                                                                    <div class="ms-Persona-presence">
+                                                                    </div>
+                                                                    <div class="ms-Persona-details">
+                                                                        <div class="ms-Persona-primaryText">Grant Steel</div>
+                                                                        <div class="ms-Persona-secondaryText">Sales</div>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="ms-OrgChart-group">
+                                                    <div class="ms-OrgChart-groupTitle">Staff</div>
+                                                    <ul class="ms-OrgChart-list">
+                                                        <li class="ms-OrgChart-listItem">
+                                                            <button class="ms-OrgChart-listItemBtn" tabindex="1">
+                                                                <div class="ms-Persona">
+                                                                    <div class="ms-Persona-imageArea">
+                                                                        <div class="ms-Persona-initials ms-Persona-initials--blue">RM</div>
+                                                                        <img class="ms-Persona-image" src="https://dev.office.com/fabric-js/Components/persona/Persona.Person2.png">
+                                                                    </div>
+                                                                    <div class="ms-Persona-presence">
+                                                                    </div>
+                                                                    <div class="ms-Persona-details">
+                                                                        <div class="ms-Persona-primaryText">Harvey Wallin</div>
+                                                                        <div class="ms-Persona-secondaryText">Public Relations</div>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+                                                        </li>
+                                                        <li class="ms-OrgChart-listItem">
+                                                            <button class="ms-OrgChart-listItemBtn" tabindex="1">
+                                                                <div class="ms-Persona">
+                                                                    <div class="ms-Persona-imageArea">
+                                                                        <div class="ms-Persona-initials ms-Persona-initials--blue">RM</div>
+                                                                        <img class="ms-Persona-image" src="https://dev.office.com/fabric-js/Components/persona/Persona.Person2.png">
+                                                                    </div>
+                                                                    <div class="ms-Persona-presence">
+                                                                    </div>
+                                                                    <div class="ms-Persona-details">
+                                                                        <div class="ms-Persona-primaryText">Marcus Lauer</div>
+                                                                        <div class="ms-Persona-secondaryText">Technical Support</div>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+                                                        </li>
+                                                        <li class="ms-OrgChart-listItem">
+                                                            <button class="ms-OrgChart-listItemBtn" tabindex="1">
+                                                                <div class="ms-Persona">
+                                                                    <div class="ms-Persona-imageArea">
+                                                                        <div class="ms-Persona-initials ms-Persona-initials--blue">RM</div>
+                                                                        <img class="ms-Persona-image" src="https://dev.office.com/fabric-js/Components/persona/Persona.Person2.png">
+                                                                    </div>
+                                                                    <div class="ms-Persona-presence">
+                                                                    </div>
+                                                                    <div class="ms-Persona-details">
+                                                                        <div class="ms-Persona-primaryText">Marcel Groce</div>
+                                                                        <div class="ms-Persona-secondaryText">Delivery</div>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+                                                        </li>
+                                                        <li class="ms-OrgChart-listItem">
+                                                            <button class="ms-OrgChart-listItemBtn" tabindex="1">
+                                                                <div class="ms-Persona">
+                                                                    <div class="ms-Persona-imageArea">
+                                                                        <div class="ms-Persona-initials ms-Persona-initials--blue">RM</div>
+                                                                        <img class="ms-Persona-image" src="https://dev.office.com/fabric-js/Components/persona/Persona.Person2.png">
+                                                                    </div>
+                                                                    <div class="ms-Persona-presence">
+                                                                    </div>
+                                                                    <div class="ms-Persona-details">
+                                                                        <div class="ms-Persona-primaryText">Jessica Fischer</div>
+                                                                        <div class="ms-Persona-secondaryText">Marketing</div>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="ms-FacePile-addButton ms-FacePile-addButton--overflow">
+                                <span class="ms-FacePile-overflowText">+3</span>
+                            </button>
+                        </div>-->
+                        <!-- Compact people picker style for assignments -->
+                        <div class="ms-PeoplePicker ms-PeoplePicker--compact">
+                            <div class="ms-PeoplePicker-searchBox">
+                                <div class="ms-TextField ms-TextField--textFieldUnderlined">
+                                    <label class="ms-Label" style="visibility: hidden">Assign to:</label>
+                                    <input class="ms-TextField-field" type="text" placeholder="Select or enter an option&hellip;">
+                                </div>
+                            </div>
+                            <div class="ms-PeoplePicker-results ms-PeoplePicker-results--compact">
+                                <div id="myPeopleResultGroup" class="ms-PeoplePicker-resultGroup">
+                                    <div class="ms-PeoplePicker-resultGroupTitle">
+                                        Contacts
+                                    </div>
+                                    <div class="ms-PeoplePicker-result" tabindex="1">
+                                        <div class="ms-Persona ms-Persona--xs">
+                                            <div class="ms-Persona-imageArea">
+                                                <div class="ms-Persona-initials ms-Persona-initials--blue">RM</div>
+                                            </div>
+                                            <div class="ms-Persona-presence">
+                                            </div>
+                                            <div class="ms-Persona-details">
+                                                <div class="ms-Persona-primaryText">Russel Miller</div>
+                                                <div class="ms-Persona-secondaryText">Sales</div>
+                                            </div>
+                                        </div>
+                                        <button class="ms-PeoplePicker-resultAction">
+                                            <i class="ms-Icon ms-Icon--Clear"></i>
+                                        </button>
+                                    </div>
+                                    <div class="ms-PeoplePicker-result" tabindex="1">
+                                        <div class="ms-Persona ms-Persona--xs">
+                                            <div class="ms-Persona-imageArea">
+                                                <div class="ms-Persona-initials ms-Persona-initials--purple">DF</div>
+                                            </div>
+                                            <div class="ms-Persona-presence">
+                                            </div>
+                                            <div class="ms-Persona-details">
+                                                <div class="ms-Persona-primaryText">Douglas Fielder</div>
+                                                <div class="ms-Persona-secondaryText">Public Relations</div>
+                                            </div>
+                                        </div>
+                                        <button class="ms-PeoplePicker-resultAction">
+                                            <i class="ms-Icon ms-Icon--Clear"></i>
+                                        </button>
+                                    </div>
+                                    <div class="ms-PeoplePicker-result" tabindex="1">
+                                        <div class="ms-Persona ms-Persona--xs">
+                                            <div class="ms-Persona-imageArea">
+                                                <div class="ms-Persona-initials ms-Persona-initials--black">GS</div>
+                                            </div>
+                                            <div class="ms-Persona-presence">
+                                            </div>
+                                            <div class="ms-Persona-details">
+                                                <div class="ms-Persona-primaryText">Grant Steel</div>
+                                                <div class="ms-Persona-secondaryText">Sales</div>
+                                            </div>
+                                        </div>
+                                        <button class="ms-PeoplePicker-resultAction">
+                                            <i class="ms-Icon ms-Icon--Clear"></i>
+                                        </button>
+                                    </div>
+                                    <div class="ms-PeoplePicker-result" tabindex="1">
+                                        <div class="ms-Persona ms-Persona--xs">
+                                            <div class="ms-Persona-imageArea">
+                                                <div class="ms-Persona-initials ms-Persona-initials--green">HW</div>
+                                            </div>
+                                            <div class="ms-Persona-presence">
+                                            </div>
+                                            <div class="ms-Persona-details">
+                                                <div class="ms-Persona-primaryText">Harvey Wallin</div>
+                                                <div class="ms-Persona-secondaryText">Public Relations</div>
+                                            </div>
+                                        </div>
+                                        <button class="ms-PeoplePicker-resultAction">
+                                            <i class="ms-Icon ms-Icon--Clear"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="ms-PeoplePicker-searchMore" style="visibility: hidden">
+                                    <div class="ms-PeoplePicker-searchMoreIcon">
+                                        <i class="ms-Icon ms-Icon--Search"></i>
+                                    </div>
+                                    <div class="ms-PeoplePicker-searchMoreText">
+                                        Search my groups
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Due Date field -->
+                        <div class="ms-DatePicker">
+                            <div class="ms-TextField">
+                                <label class="ms-Label">Due date</label>
+                                <i class="ms-DatePicker-event ms-Icon ms-Icon--Event"></i>
+                                <input id="newDueDate" class="ms-TextField-field" type="text" placeholder="Select a date&hellip;">
+                            </div>
+                            <div class="ms-DatePicker-monthComponents">
+                                <span class="ms-DatePicker-nextMonth js-nextMonth"><i class="ms-Icon ms-Icon--ChevronRight"></i></span>
+                                <span class="ms-DatePicker-prevMonth js-prevMonth"><i class="ms-Icon ms-Icon--ChevronLeft"></i></span>
+                                <div class="ms-DatePicker-headerToggleView js-showMonthPicker"></div>
+                            </div>
+                            <span class="ms-DatePicker-goToday js-goToday">Go to today</span>
+                            <div class="ms-DatePicker-monthPicker">
+                                <div class="ms-DatePicker-header">
+                                    <div class="ms-DatePicker-yearComponents">
+                                        <span class="ms-DatePicker-nextYear js-nextYear"><i class="ms-Icon ms-Icon--ChevronRight"></i></span>
+                                        <span class="ms-DatePicker-prevYear js-prevYear"><i class="ms-Icon ms-Icon--ChevronLeft"></i></span>
+                                    </div>
+                                    <div class="ms-DatePicker-currentYear js-showYearPicker"></div>
+                                </div>
+                                <div class="ms-DatePicker-optionGrid">
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="0">Jan</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="1">Feb</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="2">Mar</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="3">Apr</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="4">May</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="5">Jun</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="6">Jul</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="7">Aug</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="8">Sep</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="9">Oct</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="10">Nov</span>
+                                    <span class="ms-DatePicker-monthOption js-changeDate" data-month="11">Dec</span>
+                                </div>
+                            </div>
+                            <div class="ms-DatePicker-yearPicker">
+                                <div class="ms-DatePicker-decadeComponents">
+                                    <span class="ms-DatePicker-nextDecade js-nextDecade"><i class="ms-Icon ms-Icon--ChevronRight"></i></span>
+                                    <span class="ms-DatePicker-prevDecade js-prevDecade"><i class="ms-Icon ms-Icon--ChevronLeft"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Title for the task -->
+                        <div class="ms-TextField">
+                            <label class="ms-Label">Title</label>
+                            <input id="newTitle" class="ms-TextField-field" type="text" value="" placeholder="Enter a title for the task&hellip;">
+                        </div>
+
+                        <!-- Description for the task -->
+                        <div class="ms-TextField ms-TextField--multiline">
+                            <label class="ms-Label">Description</label>
+                            <textarea id="newDescription" class="ms-TextField-field" placeholder="Type a full description of the problem and action to take here&hellip;"></textarea>
+                        </div>
+                        <div class="ms-CheckBox">
+                            <input id="chkAutoOpenWithDoc" tabindex="-1" type="checkbox" class="ms-CheckBox-input">
+                            <label role="checkbox" class="ms-CheckBox-field" tabindex="0" aria-checked="false" name="checkboxa">
+                                <span class="ms-Label">Automatically open Tasker with this document?</span>
+                            </label>
+                        </div>
+                        <button class="ms-Button ms-Button--primary" id="create-button">
+                            <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span>
+                            <span class="ms-Button-label" id="button-text"></span>
+                            <span class="ms-Button-description" id="button-desc"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="ms-Grid ms-bgColor-themeSecondary">
+            <div class="ms-Grid-row">
+                <div class="ms-Grid-col ms-u-sm12 ms-u-md12 ms-u-lg12"> <div class="ms-font-xl ms-fontColor-white">Proseware, Inc.</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="folderPage" style="display:none">
+        <div id="od-loading"></div>
+        <div class="breadcrumb" id="od-breadcrumb"></div>
+        <div id="od-content">
+            <div id="od-items" class="od-pagecol"></div>
+        </div>
+    </div>
+
+    <!-- FabricUI component used for displaying notifications -->
+    <div class="ms-MessageBanner is-hidden" id="notification-popup">
+        <div class="ms-MessageBanner-content">
+            <div class="ms-MessageBanner-text">
+                <div class="ms-MessageBanner-clipper">
+                    <div class="ms-font-m-plus ms-fontWeight-semibold" id="notification-header"></div>
+                    <div class="ms-font-m ms-fontWeight-semilight" id="notification-body"></div>
+                </div>
+            </div>
+            <button class="ms-MessageBanner-expand" style="display:none"><i class="ms-Icon ms-Icon--chevronsDown"></i> </button>
+            <div class="ms-MessageBanner-action"></div>
+        </div>
+        <button class="ms-MessageBanner-close">
+            <i class="ms-Icon ms-Icon--Clear"></i>
+        </button>
+    </div>
+</body>
+</html>
