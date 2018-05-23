@@ -9,6 +9,8 @@ Proseware Tasker is a collaborative tool for teams that share authoring responsi
 
 Tasks can be created and assigned as well as managed in a simple but powerful list format, right inside the document edit session.
 
+![Task creation screenshot](screenshot-createtask.png)
+
 ## Prerequisites
 
 - Office account tenant for your team.
