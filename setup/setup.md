@@ -35,6 +35,8 @@
 10. In Microsoft Graph Permissions, next to Delegated Permissions, click "Add"
 	
 11. Add the permissions so they match the following: 
+ 
+![Graph permissions](images/finalgraphpermissions.png)
 	
 12. Choose Save.
 
