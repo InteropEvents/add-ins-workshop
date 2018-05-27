@@ -19,7 +19,7 @@
 
 5. The registration page displays, listing the properties of your app.
 
-6. IMPORTANT: Copy the Application Id and save it in Notepad. This is the unique identifier for your app. You'll use this <<(1) AppId value>> to configure your app.
+6. IMPORTANT: Copy the Application Id and save it in Notepad. This is the unique identifier for your app. You'll use this **(1) AppId** value to configure your app.
 	
 ![Copy the AppId](images/copytheappid.png)
 
@@ -42,7 +42,7 @@
 
 ## Get the Planner Task URL from your tenant:
 
-1. Log into your tenant
+1. Use Notepad to open PlannerSetupInfo.txt in the root of the repo. Then log into your tenant
 
 ![Log into your tenant](images/tenantlogin.png)
 
@@ -50,11 +50,11 @@
 
 ![Open Planner](images/openplanner.png)
 
-3. Click on the "+ New plan" item and create a new <<public>> plan named "Tasks Plan":
+3. Click on the "+ New plan" item and create a new **public** plan named "Tasks Plan":
 
 ![Create a new plan](images/createnewplan.png)
 
-4. Create a test task and open it. In the "..." (ellipsis, upper right), click and select "Copy link to task". Paste the URL in Notepad. Save this <<(2) tenant-specific base URL>> for later in the code:
+4. Create a test task and open it. In the "..." (ellipsis, upper right), click and select "Copy link to task". Paste the URL in Notepad. Save this **(2) tenant-specific base URL** for later in the code:
 
 ![Create a test task](images/createtesttask.png)
 
@@ -72,9 +72,11 @@
 
 ![Select Planner samples](images/selectplannersamples.png)
 
-8. Select the "GET all my Planner tasks" sample from the list and copy the "planId" and "bucketId" with their values from the results pane. Save these <<(3 & 4) planId and bucketId>> to Notepad, we will use these to update the code.
+8. Select the "GET all my Planner tasks" sample from the list and copy the "planId" and "bucketId" with their values from the results pane. Save these **(3) planId and (4) bucketId** to Notepad, we will use these to update the code.
 
 ![Plan and bucket ids](images/bucketandplanids.png)
+
+9. Finally, go back to Planner and delete the test task.
 
 ## Update the code for your tenant:
 
@@ -87,12 +89,36 @@
 var azureAppId = "<<appid goes here>>";
 // (2) Planner task's tenant-specific base URL. Get this from Planner with an open task.
 var plannerTaskUrl = "https://tasks.office.com/jebosoft.onmicrosoft.com/en-US/Home/Task/";
-// (3) Bucket ID for the tasks we create.
-var bucketId = "3LsaqpPwQUqvc_12lZ3-YGUAHdR_";
-// (4) Plan ID for the plan we created.
+// (3) Plan ID for the plan we created.
 var planId = "p9MJMuZW3U2azazF4jgKEmUABILd";
+// (4) Bucket ID for the tasks we create.
+var bucketId = "3LsaqpPwQUqvc_12lZ3-YGUAHdR_";
 ``` 
 
 3. Using the four numbers items in your Notepad file, update the initial values for these four variables.
 
 # You are now ready to build the Proseware Tasks sample add-in!
+
+1. In Visual Studio, right click on "taskerWeb" project name in Solution Explorer and select "**Set as StartUp Project**":
+
+![Set Web Project as Startup](images/setasstartupproject.png)
+
+2. Right click on taskerWeb project again and select "**Properties**". Then select Web | Start action | Specific page and insert: Home.html
+
+![Set Startup action to Specific page](images/specificpage.png)
+
+3. Hit Ctrl-F5 to start without debugging. You should see the Home.html signon button:
+
+![Home.html page in browser](images/ctrlf5home.png)
+
+4. Side load the add-in in Word, pointing to the tasker.xml manifest in the project:
+
+![Sideload the Add-in](images/sideload.png)
+
+5. Once you see Proseware Tasks in the command bar, open the add-in and sign in: 
+
+![Proseware Tasks command button](images/prosewaretasks.png)
+
+![Open the Add-in](images/openaddin.png)
+
+![Permissions login](images/permissionslogin.png)
