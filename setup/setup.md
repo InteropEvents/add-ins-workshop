@@ -90,9 +90,10 @@ var azureAppId = "<<appid goes here>>";
 // (2) Planner task's tenant-specific base URL. Get this from Planner with an open task.
 var plannerTaskUrl = "https://tasks.office.com/jebosoft.onmicrosoft.com/en-US/Home/Task/";
 // (3) Plan ID for the plan we created.
-var planId = "p9MJMuZW3U2azazF4jgKEmUABILd";
+var planId = "<<plan id goes here>>";
 // (4) Bucket ID for the tasks we create.
-var bucketId = "3LsaqpPwQUqvc_12lZ3-YGUAHdR_";
+var bucketId = "<<bucket id goes here>>";
+
 ``` 
 
 3. Using the four numbers items in your Notepad file, update the initial values for these four variables.
