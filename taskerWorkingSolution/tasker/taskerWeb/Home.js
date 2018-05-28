@@ -90,6 +90,9 @@ var myPeople;
             var description = task.tasker_detail.description;
             var dueDate = new Date(task.dueDateTime);
 
+            if (task.planId != planId)
+                return null;
+
             if (task.percentComplete == 0) {
                 primaryTextStyle = '';
                 isUnread = ' is-unread ';
@@ -189,7 +192,7 @@ var myPeople;
 
         var index = 0;
         liElements.forEach(function (el) {
-            if (currentTasks.value[index].percentComplete != 100) {
+            if ((el != null) && (currentTasks.value[index].percentComplete != 100)) {
                 if (typeof currentTasks.value[index].tasker_detail.references[encodedDocUrl] != 'undefined') {
                     $('#mytasks_list').append(el);
                 }
@@ -201,7 +204,7 @@ var myPeople;
 
             index = 0;
             liElements.forEach(function (el) {
-                if (currentTasks.value[index].percentComplete != 100) {
+                if ((el != null) && (currentTasks.value[index].percentComplete != 100)) {
                     if (typeof currentTasks.value[index].tasker_detail.references[encodedDocUrl] == 'undefined') {
                         $('#mytasks_list').append(el);
                     }
