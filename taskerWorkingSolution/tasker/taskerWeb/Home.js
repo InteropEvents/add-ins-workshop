@@ -1,12 +1,12 @@
 ﻿// Per tenant variables to update when building against a new tenant.
 // (1) AppId from Application Registration Portal
-var azureAppId = "e8ca0e9b-4930-46f5-aadc-ad0cdf934d45";
+var azureAppId = "<<appid goes here>>";
 // (2) Planner task's tenant-specific base URL. Get this from Planner with an open task.
 var plannerTaskUrl = "https://tasks.office.com/jebosoft.onmicrosoft.com/en-US/Home/Task/";
-// (3) Bucket ID for the tasks we create.
-var bucketId = "3LsaqpPwQUqvc_12lZ3-YGUAHdR_";
-// (4) Plan ID for the plan we created.
-var planId = "p9MJMuZW3U2azazF4jgKEmUABILd";
+// (3) Plan ID for the plan we created.
+var planId = "<<plan id goes here>>";
+// (4) Bucket ID for the tasks we create.
+var bucketId = "<<bucket id goes here>>";
 
 // Other globals
 var gToken;
@@ -513,8 +513,10 @@ var myPeople;
             }
         };
 
+        var numAssignees = 0;
         // Add assignees from the People Picker search box.
         $('div.ms-PeoplePicker-searchBox').find('.ms-Persona-secondaryText').each(function () {
+            numAssignees++;
             newTask.assignments[this.innerText] =
                 {
                     "@odata.type": "#microsoft.graph.plannerAssignment",
@@ -523,7 +525,7 @@ var myPeople;
         });
 
         // if no assignees in the search box, just assign to me.
-        if (newTask.assignments.length == 0) {
+        if (numAssignees == 0) {
             newTask.assignments[assigneeMe] =
                 {
                     "@odata.type": "#microsoft.graph.plannerAssignment",
