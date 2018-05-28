@@ -89,6 +89,7 @@ var myPeople;
             var title = task.title;
             var description = task.tasker_detail.description;
             var dueDate = new Date(task.dueDateTime);
+            var liId = "otherdoc";
 
             if (task.planId != planId)
                 return null;
@@ -296,6 +297,7 @@ var myPeople;
             }, 2000);
         }
 
+        setTimeout(function () { return; }, 200);
     }
 
     function updateTask(task, patchString) {
@@ -492,9 +494,39 @@ var myPeople;
             .catch(function (error) { /* handle error here */ });
     }
 
+    // The polling function
+    function poll(fn, timeout, interval) {
+        var endTime = Number(new Date()) + (timeout || 2000);
+        interval = interval || 100;
+
+        var checkCondition = function (resolve, reject) {
+            var ajax = fn();
+            // dive into the ajax promise
+            ajax.then(function (response) {
+                // If the condition is met, we're done!
+                if (response != null) {
+                    resolve(response);
+                }
+
+                // If the condition isn't met but the timeout hasn't elapsed, go again
+                else if (Number(new Date()) < endTime) {
+                    setTimeout(checkCondition, interval, resolve, reject);
+                }
+
+                // Didn't match and too much time, reject!
+                else {
+                    reject(new Error('Timed out for ' + fn + ': ' + arguments));
+                }
+
+            }).catch(function () {
+                setTimeout(checkCondition, interval, resolve, reject);
+            });
+        };
+
+        return new Promise(checkCondition);
+    }
+
     function createTask() {
-        // ====== START ======
-        // Workshop code snippet #1
 
         var assigneeMe = me.id;
         var newDueDate = getDateTimeOffset($('#newDueDate').val());
@@ -541,64 +573,67 @@ var myPeople;
             .api('/planner/tasks')
             .post(newTask).then(function (res) {
                 console.log(res)
-                sleep(2000);
+                //sleep(2000);
                 resTask = res;
 
-                return client
-                    .api('/planner/tasks/' + res.id + '/details')
-                    .get();
+                poll(function () {
+                    //return axios.get('something.json');
+                    return client
+                        .api('/planner/tasks/' + res.id + '/details')
+                        .get();
+                }, 3000, 150).then(function (det) {
+                    var newDescription = $('#newDescription').val();
+                    // it just happens that the details object id is the task id.
+                    var bindid = addLocation($('#newTitle').val(), det.id);
 
-            }).then(function (det) {
-                var newDescription = $('#newDescription').val();
-                // it just happens that the details object id is the task id.
-                var bindid = addLocation($('#newTitle').val(), det.id);
-
-                var reference = {
-                    "previewType": "noPreview",
-                    "description": newDescription,
-                    "references": {
-                    }
-                };
-                reference.references[encodedDocUrl] =
-                    {
-                        "@odata.type": "microsoft.graph.plannerExternalReference",
-                        "alias": bindid,
-                        "previewPriority": ' !',
-                        "type": Office.context.host
+                    var reference = {
+                        "previewType": "noPreview",
+                        "description": newDescription,
+                        "references": {
+                        }
                     };
+                    reference.references[encodedDocUrl] =
+                        {
+                            "@odata.type": "microsoft.graph.plannerExternalReference",
+                            "alias": bindid,
+                            "previewPriority": ' !',
+                            "type": Office.context.host
+                        };
 
-                return client
-                    .api('/planner/tasks/' + resTask.id + '/details')
-                    .header("If-Match", det["@odata.etag"])
-                    .header("Content-Type", "application/json")
-                    .patch(reference);
+                    return client
+                        .api('/planner/tasks/' + resTask.id + '/details')
+                        .header("If-Match", det["@odata.etag"])
+                        .header("Content-Type", "application/json")
+                        .patch(reference);
 
-            }).then(function (res) {
-                // all done with patch Promise
+                }).then(function (res) {
+                    // all done with patch Promise
 
-                sleep(2000);
-                // refresh the data
-                loadContextData();
+                    //sleep(2000);
+                    // refresh the data
+                    loadContextData();
 
-                $("#pivotContainer").find("*").prop('disabled', false);
-                $('#spinnerAdding').css({ "display": "none" });
+                    $("#pivotContainer").find("*").prop('disabled', false);
+                    $('#spinnerAdding').css({ "display": "none" });
 
-                showNotification('Success!', 'Created a new task');
+                    showNotification('Success!', 'Created a new task');
 
-                $('#newDueDate').val("");
-                $('#newTitle').val("");
-                $('#newDescription').text("");
+                    $('#newDueDate').val("");
+                    $('#newTitle').val("");
+                    $('#newDescription').text("");
 
-            }).catch(function (err) {
-                // catch any error that happened so far
-                console.log("Error: " + err.message);
+                }).catch(function (err) {
+                    // catch any error that happened so far
+                    console.log("Error: " + err.message);
+
+                });
 
             });
-
-        // ===== END =====
     }
 
     function goToTaskSelection(id) {
+        if (id == "otherdoc")
+            return;
         switch (Office.context.host) {
             case Office.HostType.Word: {
                 Word.run(function (context) {
