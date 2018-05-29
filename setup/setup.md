@@ -54,11 +54,11 @@
 
 ![Create a new plan](images/createnewplan.png)
 
-IMPORTANT: Assign the task to **yourself**.
+4. Create a test task and assign it to **yourself**. 
 
 ![Create a test task](images/createtaskassign.jpg)
 
-4. Create a test task and open it. In the "..." (ellipsis, upper right), click and select "Copy link to task". Paste the URL in Notepad. Save this **(2) tenant-specific base URL** for later in the code:
+In the "..." (ellipsis, upper right), click and select "Copy link to task". Paste the URL in Notepad. Save this **(2) tenant-specific base URL** for later in the code:
 
 ![Open the test task](images/linktotask.png)
 
