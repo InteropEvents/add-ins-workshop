@@ -22,6 +22,10 @@ Tasks can be created and assigned as well as managed in a simple but powerful li
 
 1. Start by cloning this whole repo to your local system.
 
+```
+git clone https://github.com/InteropEvents/add-ins-workshop.git
+```
+
 2. Next get your tenant and Planner ready for the add-in by following the steps in [the setup document.](setup/setup.md) 
 
 3. At this point, you can open tasker.sln in Visual Studio and build it. 
