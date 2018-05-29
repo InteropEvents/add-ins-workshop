@@ -58,7 +58,7 @@
 
 ![Create a test task](images/createtaskassign.jpg)
 
-In the "..." (ellipsis, upper right), click and select "Copy link to task". Paste the URL in Notepad. Save this **(2) tenant-specific base URL** for later in the code:
+4a. Open the task. In the "..." (ellipsis, upper right), click and select "Copy link to task". Paste the URL in Notepad. Save this **(2) tenant-specific base URL** for later in the code:
 
 ![Open the test task](images/linktotask.png)
 
