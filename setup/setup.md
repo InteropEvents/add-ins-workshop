@@ -60,7 +60,13 @@
 
 ![Open the test task](images/linktotask.png)
 
-5. Now, in a separate browser tab, open Graph Explorer using https://developer.microsoft.com/en-us/graph/graph-explorer and sign into your tenant with the big **left** side button titled, "**Sign in with Microsoft**":
+5a. To capture the **(3) planId and (4) bucketId**, try this first. Use the below link to open Graph Explorer and query all tasks assigned to me. Copy the  **(3) planId and (4) bucketId** to the appropriate fields in notepad. 
+
+[https://developer.microsoft.com/en-us/graph/graph-explorer?request=me/planner/tasks?$select=title,planId,bucketId&method=GET&version=v1.0&GraphUrl=https://graph.microsoft.com](https://developer.microsoft.com/en-us/graph/graph-explorer?request=me/planner/tasks?$select=title,planId,bucketId&method=GET&version=v1.0&GraphUrl=https://graph.microsoft.com)
+ 
+If this worked and you copied/pasted the **(3) planId and (4) bucketId** to notepad, then skip to [Step 9.](#9-cleanup)
+
+5b. If 5a doesn't work for you, alternatively do the next few steps. In a separate browser tab, open Graph Explorer using https://developer.microsoft.com/en-us/graph/graph-explorer and sign into your tenant with the big **left** side button titled, "**Sign in with Microsoft**":
 
 ![Log into Graph Explorer](images/logintographexplorer.png)
 
@@ -76,7 +82,8 @@
 
 ![Plan and bucket ids](images/bucketandplanids.png)
 
-9. Finally, go back to Planner and delete the test task.
+### 9. Cleanup
+Finally, go back to Planner and delete the test task. We don't want this in our plan.
 
 ## Update the code for your tenant:
 
