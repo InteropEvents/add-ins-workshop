@@ -297,7 +297,11 @@ var myPeople;
             }, 2000);
         }
 
-        setTimeout(function () { return; }, 200);
+        $('#mytasks_list').css({ "visibility": "hidden" });
+
+        setTimeout(function () {
+            $('#mytasks_list').css({ "visibility": "visible" });
+        }, 100);
 
     }
 
