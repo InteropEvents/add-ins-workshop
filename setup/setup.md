@@ -65,6 +65,10 @@
 5a. To capture the **(3) planId and (4) bucketId**, try this first. Use the below link to open Graph Explorer and query all tasks assigned to me. Copy the  **(3) planId and (4) bucketId** to the appropriate fields in notepad. 
 
 [https://developer.microsoft.com/en-us/graph/graph-explorer?request=me/planner/tasks?$select=title,planId,bucketId&method=GET&version=v1.0&GraphUrl=https://graph.microsoft.com](https://developer.microsoft.com/en-us/graph/graph-explorer?request=me/planner/tasks?$select=title,planId,bucketId&method=GET&version=v1.0&GraphUrl=https://graph.microsoft.com)
+
+IMPORTANT: Make sure you have Group.Read.All, Group.ReadWrite.All permissions in Graph Explorer to allow this query to be successful.
+
+![All tasks permissions](images\alltasksperms.png)
  
 If this worked and you copied/pasted the **(3) planId and (4) bucketId** to notepad, then skip to [Step 9.](#9-cleanup)
 
