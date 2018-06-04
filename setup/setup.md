@@ -68,7 +68,7 @@
 
 IMPORTANT: Make sure you have Group.Read.All, Group.ReadWrite.All permissions in Graph Explorer to allow this query to be successful.
 
-![All tasks permissions](images\alltasksperms.png)
+![All tasks permissions](images/alltasksperms.png)
  
 If this worked and you copied/pasted the **(3) planId and (4) bucketId** to notepad, then skip to [Step 9.](#9-cleanup)
 
