@@ -5,7 +5,7 @@
 
 1. Sign into the Application Registration Portal  (https://apps.dev.microsoft.com) using "work or school account".
 
-![Sign in to your tenant](images/signintoyourtenant.png =250x)
+![Sign in to your tenant](images/signintoyourtenant.png)
 
 2. Sign into your tenant (i.e. <user>@<tenant>.onmicrosoft.com, <password>)
 
