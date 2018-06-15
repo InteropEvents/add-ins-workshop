@@ -51,7 +51,10 @@ var myPeople;
 
             document.getElementById("mytasks_list").addEventListener("click", function (e) {
                 console.log(e.target.nodeName)
-                if (e.target && (e.target.className.indexOf("ms-ListItem-secondaryText") == -1) && (e.target.className.indexOf("ms-Icon--More") == -1)) {
+                if (e.target && (e.target.className.indexOf("ms-ListItem-secondaryText") == -1)
+                    && (e.target.className.indexOf("ms-Icon--More") == -1)
+                    && (e.target.id.indexOf("undefined") == -1)) {
+
                     console.log(e.target.id);
                     goToTaskSelection(e.target.id.substr(2));
                 }
