@@ -150,7 +150,7 @@ var myPeople;
             var description = task.tasker_detail.description;
             var dueDate = new Date(task.dueDateTime);
             var liId = "otherdoc";
-            var bgColor = "";
+            var bgColor = "background-color:white";
 
             if (task.planId != planId)
                 return null;
@@ -252,8 +252,8 @@ var myPeople;
                 </div>\
               </div>';
 
-            return '<li id="li' + liId + '" class= "ms-ListItem ' + isUnread + ' ms-ListItem--image ms-CalloutTaskDescription" tabindex = "0" style = "' + bgColor + '"><div  id="lm' + liId + '" class= "ms-ListItem-image" style = "background-color:white; width:20px;height:20px" >\
-                <img id="oi' + liId + '" src = ' + svgOrgOriginIcon + ' style = "background-color:white; width:20px;height:20px" />\
+           return '<li id="li' + liId + '" class= "ms-ListItem ' + isUnread + ' ms-ListItem--image ms-CalloutTaskDescription" tabindex = "0" style = "' + bgColor + '"><div  id="lm' + liId + '" class= "ms-ListItem-image" style = "'+ bgColor + '; width:20px;height:20px" >\
+                <img id="oi' + liId + '" src = ' + svgOrgOriginIcon + ' style = "' + bgColor + '; width:20px;height:20px" />\
                 </div ><span  id="pr' + liId + '" class="ms-ListItem-primaryText" style="' + primaryTextStyle + isUnread + '">' + title + '</span>\
                 <span  id="se' + liId + '" class= "ms-ListItem-secondaryText " style="' + secondaryTextStyle + '">' + description.substring(0, 30) + '... </span >\
                 <span  id="te' + liId + '" class= "ms-ListItem-tertiaryText" style="' + tertiaryTextStyle + '"> Due: ' + dueDate.toDateString() + '</span >\
