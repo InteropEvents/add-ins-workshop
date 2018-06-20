@@ -19,7 +19,7 @@
 
 5. The registration page displays, listing the properties of your app.
 
-6. IMPORTANT: Copy the Application Id and save it in Notepad. This is the unique identifier for your app. You'll use this **(1) AppId** value to configure your app.
+6. **IMPORTANT**: Copy the Application Id and save it in Notepad. This is the unique identifier for your app. You'll use this **(1) AppId** value to configure your app.
 	
 ![Copy the AppId](images/copytheappid.png)
 
@@ -32,21 +32,22 @@
 ![Choose Web Platform](images/choosewebplatform.png)
 
 9. Make sure the Allow Implicit Flow check box is selected, and enter https://localhost:44382/Home.html as the Redirect URI.
-10. In Microsoft Graph Permissions, next to Delegated Permissions, click "Add"
+
+10. In Microsoft Graph Permissions, next to Delegated Permissions, click "Add".
 	
 11. Add the permissions so they match the following: 
  
 ![Graph permissions](images/finalgraphpermissions.png)
 	
-12. Choose Save.
+12. Click Save.
 
 ## Get the Planner Task URL from your tenant:
 
-1. Use Notepad to open `PlannerSetupInfo.txt` in the root of the repo. Then log into your tenant
+1. Use Notepad to open `PlannerSetupInfo.txt` in the root of the repo. Then log into your tenant.
 
 ![Log into your tenant](images/tenantlogin.png)
 
-2. Open the Planner app:
+2. Open the Planner app.
 
 ![Open Planner](images/openplanner.png)
 
@@ -72,15 +73,15 @@ IMPORTANT: Make sure you have Group.Read.All, Group.ReadWrite.All permissions in
  
 If this worked and you copied/pasted the **(3) planId and (4) bucketId** to notepad, then skip to [Step 9.](#9-cleanup)
 
-5b. If 5a doesn't work for you, alternatively do the next few steps. In a separate browser tab, open Graph Explorer using https://developer.microsoft.com/en-us/graph/graph-explorer and sign into your tenant with the big **left** side button titled, "**Sign in with Microsoft**":
+5b. If 5a doesn't work for you, alternatively do the next few steps. In a separate browser tab, open Graph Explorer using https://developer.microsoft.com/en-us/graph/graph-explorer and sign into your tenant with the big **left** side button titled, "**Sign in with Microsoft**".
 
 ![Log into Graph Explorer](images/logintographexplorer.png)
 
-6. Click "show more samples" on the bottom left:
+6. Click "show more samples" on the bottom left.
 
 ![Get more graph samples](images/showmoresamples.png)
 
-7. Select "Planner (..." to get the Planner Graph sample REST API calls:
+7. Select "Planner (..." to get the Planner Graph sample REST API calls.
 
 ![Select Planner samples](images/selectplannersamples.png)
 
@@ -93,8 +94,8 @@ Finally, go back to Planner and delete the test task. We don't want this in our 
 
 ## Update the code for your tenant:
 
-1. In the tasker.sln solution in Visual Studio, go to the top of taskerWeb/home.js
-2. There are four variables at the top of home.js that look like this:
+1. In the tasker.sln solution in Visual Studio, go to the top of `taskerWeb/home.js`.
+2. There are four variables at the top of home.js that look like this.
 
 ```js
 // Per tenant variables to update when building against a new tenant.
@@ -113,23 +114,23 @@ var bucketId = "<<bucket id goes here>>";
 
 # You are now ready to build the Proseware Tasks sample add-in!
 
-1. In Visual Studio, right click on "taskerWeb" project name in Solution Explorer and select "**Set as StartUp Project**":
+1. In Visual Studio, right click on "taskerWeb" project name in Solution Explorer and select "**Set as StartUp Project**".
 
 ![Set Web Project as Startup](images/setasstartupproject.png)
 
-2. Right click on taskerWeb project again and select "**Properties**". Then select Web | Start action | Specific page and insert: Home.html
+2. Right click on taskerWeb project again and select "**Properties**". Then select Web | Start action | Specific page and insert: `Home.html`
 
 ![Set Startup action to Specific page](images/specificpage.png)
 
-3. Hit Ctrl-F5 to start without debugging. You should see the Home.html signon button:
+3. Hit Ctrl-F5 to start without debugging. You should see the `Home.html` signon button.
 
 ![Home.html page in browser](images/ctrlf5home.png)
 
-4. Side load the add-in in Word, pointing to the tasker.xml manifest in the project:
+4. Side load the add-in in Word, pointing to the tasker.xml manifest in the project.
 
 ![Sideload the Add-in](images/sideload.png)
 
-5. Once you see Proseware Tasks in the command bar, open the add-in and sign in: 
+5. Once you see Proseware Tasks in the command bar, open the add-in and sign in.
 
 ![Proseware Tasks command button](images/prosewaretasks.png)
 
