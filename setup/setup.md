@@ -42,7 +42,7 @@
 
 ## Get the Planner Task URL from your tenant:
 
-1. Use Notepad to open PlannerSetupInfo.txt in the root of the repo. Then log into your tenant
+1. Use Notepad to open `PlannerSetupInfo.txt` in the root of the repo. Then log into your tenant
 
 ![Log into your tenant](images/tenantlogin.png)
 
