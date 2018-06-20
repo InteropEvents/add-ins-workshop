@@ -184,7 +184,7 @@ var myPeople;
             if (task.percentComplete < 100) {
                 if ((typeof task.dirty != 'undefined') && (task.dirty != null)) {
                     if (task.dirty == 'r')
-                        bgColor = "background-color: red";
+                        bgColor = "background-color: salmon";
                     if (task.dirty == 'l')
                         bgColor = "background-color: yellow";
                 }
