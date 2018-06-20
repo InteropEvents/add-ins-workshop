@@ -68,6 +68,61 @@ var myPeople;
         Office.context.document.settings.saveAsync();
     }
 
+    function registerExcelEvents() {
+        // ====== START ======
+        // Workshop module 2 code goes here:
+
+        // ===== END =====
+    }
+
+    function handleSheetChange(event) {
+        return Excel.run(function (context) {
+            return context.sync()
+                .then(function () {
+                    console.log("Change type of event: " + event.changeType);
+                    console.log("Address of event: " + event.address);
+                    console.log("Source of event: " + event.source);
+
+                    var names = context.workbook.names;
+                    names.load('items');
+
+                    return context.sync().then(function () {
+
+                        console.log(names);
+
+                        var ranges = [];
+                        for (var i = 0; i < currentTasks.value.length; i++) {
+
+                            if (typeof currentTasks.value[i].tasker_detail.references[encodedDocUrl] != 'undefined') {
+                                var taskId = currentTasks.value[i].tasker_detail.references[encodedDocUrl].alias;
+                                ranges.push(names.getItem(taskId).getRange());
+                                ranges[i].load('address');
+                            }
+                            else
+                                ranges.push(null);
+                        }
+
+                        return context.sync().then(function () {
+                            var bDirty = false;
+                            var index = 0;
+                            ranges.forEach(function (range) {
+                                if ((typeof range != 'undefined') && (range != null) && (range.getIntersectionOrNullObject(event.address) != null)) {
+                                    currentTasks.value[index].dirty = (event.source == "Remote") ? "r" : "l";
+                                    bDirty = true;
+                                }
+                                index++;
+                            });
+                            if (bDirty)
+                                updateListView();
+                        })
+
+                    });
+                });
+        }).catch(function (event) {
+            console.log("Something went wrong in event handler: " + event.message);
+        });
+    }
+
     function updateListView() {
 
         var alldocs = $('#toggleAllDocs')[0].checked;
@@ -79,6 +134,8 @@ var myPeople;
 
         // clear out the list.
         $('#mytasks_list').empty();
+
+        registerExcelEvents();
 
         var liElements = currentTasks.value.map(function (task) {
             // TODO: chose this icon based on creator's relationship to me.
@@ -93,6 +150,7 @@ var myPeople;
             var description = task.tasker_detail.description;
             var dueDate = new Date(task.dueDateTime);
             var liId = "otherdoc";
+            var bgColor = "";
 
             if (task.planId != planId)
                 return null;
@@ -101,6 +159,15 @@ var myPeople;
                 primaryTextStyle = '';
                 isUnread = ' is-unread ';
                 isUnreadStyle = 'color: #0078d7;font-weight:bold;'
+            }
+
+            if (task.percentComplete < 100) {
+                if ((typeof task.dirty != 'undefined') && (task.dirty != null)) {
+                    if (task.dirty == 'r')
+                        bgColor = "background-color: red";
+                    if (task.dirty == 'l')
+                        bgColor = "background-color: yellow";
+                }
             }
 
             numTasks++;
@@ -185,7 +252,7 @@ var myPeople;
                 </div>\
               </div>';
 
-            return '<li id="li' + liId + '" class= "ms-ListItem ' + isUnread + ' ms-ListItem--image ms-CalloutTaskDescription" tabindex = "0" ><div  id="lm' + liId + '" class= "ms-ListItem-image" style = "background-color:white; width:20px;height:20px" >\
+            return '<li id="li' + liId + '" class= "ms-ListItem ' + isUnread + ' ms-ListItem--image ms-CalloutTaskDescription" tabindex = "0" style = "' + bgColor + '"><div  id="lm' + liId + '" class= "ms-ListItem-image" style = "background-color:white; width:20px;height:20px" >\
                 <img id="oi' + liId + '" src = ' + svgOrgOriginIcon + ' style = "background-color:white; width:20px;height:20px" />\
                 </div ><span  id="pr' + liId + '" class="ms-ListItem-primaryText" style="' + primaryTextStyle + isUnread + '">' + title + '</span>\
                 <span  id="se' + liId + '" class= "ms-ListItem-secondaryText " style="' + secondaryTextStyle + '">' + description.substring(0, 30) + '... </span >\
@@ -305,7 +372,6 @@ var myPeople;
         setTimeout(function () {
             $('#mytasks_list').css({ "visibility": "visible" });
         }, 100);
-
     }
 
     function updateTask(task, patchString) {
@@ -748,10 +814,21 @@ var myPeople;
             }
                 break;
             case Office.HostType.Excel: {
-                // ====== START ======
-                // Workshop module 2 code goes here:
-
-                // ===== END =====
+                Excel.run(function (context) {
+                    var selectedRange = context.workbook.getSelectedRange();
+                    selectedRange.load('address');
+                    return context.sync().then(function () {
+                        console.log(selectedRange.address);
+                        showNotification('addFromSelectionAsync', selectedRange.address);
+                        context.workbook.names.add(uniqueBindId, selectedRange, title);
+                    });
+                }).catch(function (error) {
+                    console.log("Error: " + error);
+                    if (error instanceof OfficeExtension.Error) {
+                        console.log("Debug info: " + JSON.stringify(error.debugInfo));
+                        showNotification('addFromSelectionAsync', "Debug info: " + JSON.stringify(error.debugInfo));
+                    }
+                });
             }
                 break;
             case Office.HostType.PowerPoint: {
