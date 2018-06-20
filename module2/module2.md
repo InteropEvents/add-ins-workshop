@@ -8,6 +8,14 @@ In this module, you will add javascript code specific to Excel. This code will l
 - context.workbook.worksheets
 - worksheet.onChanged
 
+For information about Events in Excel, see: 
+
+
+[Work with Events using the Excel JavaScript API](
+https://docs.microsoft.com/en-us/office/dev/add-ins/excel/excel-add-ins-events)
+
+[Excel API Requirement Sets](https://dev.office.com/reference/add-ins/requirement-sets/excel-api-requirement-sets?product=excel)
+
 ## Step 1: The Excel.run block
 
 All Excel-specific API's must be enclosed in a callback function passed to Excel.run(). Variables must be used inside the callback function scope or there are limitations and special code that must be used to make them accessible. So let's stick with keeping everything in scope. 
