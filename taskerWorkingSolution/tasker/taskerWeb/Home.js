@@ -1,6 +1,6 @@
 ﻿// Per tenant variables to update when building against a new tenant.
 // (1) AppId from Application Registration Portal
-var azureAppId = "fcc7cf32-a6ec-4363-b06a-a60679df5211";
+var azureAppId = "<<add AppId here>>";
 // (2) Planner task's tenant-specific base URL. Get this from Planner with an open task.
 var plannerTaskUrl = "https://tasks.office.com/jebosoft.onmicrosoft.com/en-US/Home/Task/";
 // (3) Plan ID for the plan we created.
@@ -18,9 +18,9 @@ var docUrl;
 var currentTasks;
 var myPeople;
 
-var securityGroupDisplayName = "GroupTom1";
-var planTitle = "TomPlan1";
-var bucketName = "BucketToms1";
+var securityGroupDisplayName = "TaskerGroup";
+var planTitle = "TaskerPlan";
+var bucketName = "TaskerBucket";
 
 
 (function () {
