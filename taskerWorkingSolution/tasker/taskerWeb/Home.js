@@ -2,11 +2,11 @@
 // (1) AppId from Application Registration Portal
 var azureAppId = "<<add AppId here>>";
 // (2) Planner task's tenant-specific base URL. Get this from Planner with an open task.
-var plannerTaskUrl = "https://tasks.office.com/jebosoft.onmicrosoft.com/en-US/Home/Task/";
-// (3) Plan ID for the plan we created.
-var planId;// = "<<plan id goes here>>";
-// (4) Bucket ID for the tasks we create.
-var bucketId;// = "<<bucket id goes here>>";
+var plannerTaskUrl = "<<Planner URL goes here>>";
+// Plan ID for the plan we created.
+var planId;
+// Bucket ID for the tasks we create.
+var bucketId;
 
 // Other globals
 var gToken;
