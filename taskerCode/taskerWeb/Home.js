@@ -4,9 +4,9 @@ var azureAppId = "<<appid goes here>>";
 // (2) Planner task's tenant-specific base URL. Get this from Planner with an open task.
 var plannerTaskUrl = "https://tasks.office.com/jebosoft.onmicrosoft.com/en-US/Home/Task/";
 // (3) Plan ID for the plan we created.
-var planId = "<<plan id goes here>>";
+var planId;
 // (4) Bucket ID for the tasks we create.
-var bucketId = "<<bucket id goes here>>";
+var bucketId;
 
 // Other globals
 var gToken;
@@ -17,6 +17,11 @@ var encodedDocUrl;
 var docUrl;
 var currentTasks;
 var myPeople;
+
+var securityGroupDisplayName = "TaskerGroup";
+var planTitle = "TaskerPlan";
+var bucketName = "TaskerBucket";
+
 
 (function () {
     "use strict";
@@ -405,14 +410,21 @@ var myPeople;
     function SignInClick() {
 
         $("#signInBtn").hide();
-        $('#spinnerLoading').css({ "display": "inline-block" });
-        authenticator = new OfficeHelpers.Authenticator();
-        authenticator.endpoints.registerMicrosoftAuth(azureAppId, {
-            redirectUrl: 'https://localhost:44382/Home.html',
-            scope: 'files.readwrite.all User.Read.All Group.Read.All Group.ReadWrite.All People.Read Tasks.ReadWrite.Shared Tasks.ReadWrite Directory.Read.All Directory.ReadWrite.All Directory.AccessAsUser.All'
-        });
 
-        loadContextData();
+        if ($("#signInBtn").text() == "SignOut") {
+
+            authenticator.tokens.clear();
+        }
+        else {
+            $('#spinnerLoading').css({ "display": "inline-block" });
+            authenticator = new OfficeHelpers.Authenticator();
+            authenticator.endpoints.registerMicrosoftAuth(azureAppId, {
+                redirectUrl: 'https://localhost:44382/Home.html',
+                scope: 'files.readwrite.all User.Read.All User.ReadWrite.All Group.Read.All Group.ReadWrite.All People.Read Tasks.ReadWrite.Shared Tasks.ReadWrite Directory.Read.All Directory.ReadWrite.All Directory.AccessAsUser.All'
+            });
+
+            loadContextData();
+        }
     }
 
     function encodePlannerUrl(urlStr) {
@@ -430,7 +442,8 @@ var myPeople;
                     return;
                 }
                 else {
-                    //$("#signInBtn").text("SignOut");
+                    // $("#signInBtn").text("SignOut");
+
                     gToken = token;
                     $('#spinnerLoading').css({ "display": "none" });
                     $('#pivotContainer').css({ "display": "inline-block" });
@@ -522,6 +535,8 @@ var myPeople;
 
                             $('#myPeopleResultGroup').append(meDiv);
 
+                            CreateorRetrievePlan();
+
                             client
                                 .api('/me/planner/tasks')
                                 .get().then(function (res) {
@@ -561,11 +576,146 @@ var myPeople;
                                     console.log("Error: " + err.message);
 
                                 }).then(function () {
+
                                 })
                         });
                 }
             })
             .catch(function (error) { /* handle error here */ });
+    }
+
+    function CreateorRetrievePlan() {
+
+        // Flow : Create Group - > Add Yourself -> Create Plan -> Create Bucket
+
+        // 1. Create Group
+        var groupBody = {
+            "displayName": securityGroupDisplayName,
+            "groupTypes": ["Unified"],
+            "mailEnabled": false,
+            "securityEnabled": true,
+            "mailNickname": "mailNN" + securityGroupDisplayName
+        };
+
+        client
+            .api('groups')
+            .version("beta")
+            .post(groupBody).then(function (res) {
+                console.log("Security Group Created:", res.id);
+                var userGroupID = res.id;
+
+                // 2. Add Yourself to the User group
+                var userBody = {
+                    "@odata.id": "https://graph.microsoft.com/beta/directoryObjects/" + me.id
+
+                };
+
+                client
+                    .api('groups/' + userGroupID + '/members/$ref')
+                    .version("beta")
+                    .post(userBody).then(function (res) {
+
+                        console.log("Added yourself to the Security Group");
+
+                        // 3. Create a Plan in Planner
+
+                        var plannerBody = {
+
+                            "owner": userGroupID,
+
+                            "title": planTitle
+
+                        };
+
+                        poll(function () {
+                            return client
+                                .api('planner/plans')
+                                .version("beta")
+                                .post(plannerBody); //.then(function (res) {
+                        }, 3000, 150).then(function (res) {
+
+                            console.log("Created a Plan in Planner, id:", res.id);
+
+                            // Initializing global variable
+                            planId = res.id;
+
+                            // 4. Create Bucket in above Plan
+                            var bucketBody = {
+
+                                "name": bucketName,
+
+                                "planId": planId,
+
+                                "orderHint": " !"
+
+                            };
+
+                            client
+                                .api('planner/buckets')
+                                .version("beta")
+                                .post(bucketBody).then(function (res) {
+                                    console.log("Created a Bucket in Planner, id:", res.id);
+
+                                    // Initializing global variable
+                                    bucketId = res.id;
+                                }, function (error) {
+                                    console.log("Failed to create bucket in Plan: ", error);
+                                });
+                        }, function (error) {
+                            console.log("Failed to create plan in Planner: ", error);
+                        });
+                    });
+            }, function (error) {
+                console.log("Security Group Creation Failed", error);
+
+                if (error.statusCode == 400) {
+
+                    if (error.body.details.length != 0 && error.body.details[0].code == "ObjectConflict") {
+
+                        console.log("Security Group Already Exsists");
+
+                        // Get SecurityGroup id - This is required to get Plans
+                        client
+                            .api('groups')
+                            .filter("startswith(displayName,'" + securityGroupDisplayName + "')")
+                            .select("id")
+                            .get().then(function (res) {
+
+                                console.log("Security Group Found, ID: ", res.value[0].id);
+
+                                // Get Plan id for this Group
+                                client
+                                    .api('groups/' + res.value[0].id + '/planner/plans')
+                                    .version("beta")
+                                    .filter("startswith(title, '" + planTitle + "')")
+                                    .select("id")
+                                    .get().then(function (res) {
+
+                                        console.log("Plan Found, ID: ", res.value[0].id);
+
+                                        // Initializing global variable
+                                        planId = res.value[0].id;
+
+                                        // Get Bucket id for the Plan
+                                        client
+                                            .api('planner/plans/' + planId + '/buckets')
+                                            .version("beta")
+                                            .filter("startswith(name, '" + bucketName + "')")
+                                            .select("id")
+                                            .get().then(function (res) {
+
+                                                console.log("Bucket Found, ID: ", res.value[0].id);
+
+                                                // Initializing global variable
+                                                bucketId = res.value[0].id;
+                                            });
+                                    });
+                            });
+
+                    }
+
+                }
+            });
     }
 
     // The polling function
@@ -814,6 +964,7 @@ var myPeople;
             }
                 break;
             case Office.HostType.Excel: {
+
                 Excel.run(function (context) {
                     var selectedRange = context.workbook.getSelectedRange();
                     selectedRange.load('address');
@@ -829,6 +980,7 @@ var myPeople;
                         showNotification('addFromSelectionAsync', "Debug info: " + JSON.stringify(error.debugInfo));
                     }
                 });
+
             }
                 break;
             case Office.HostType.PowerPoint: {
