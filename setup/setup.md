@@ -1,8 +1,8 @@
 # Setup Instructions for Proseware Tasks Sample
 
-## Register the application to use Graph:
+## Register the application to use Graph
 
-1. Sign into the Application Registration Portal  - https://apps.dev.microsoft.com - using "work or school account".
+1. Sign into the Application Registration Portal  - [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com) - using "work or school account".
 
     ![Sign in to your tenant](images/signintoyourtenant.png)
 
@@ -30,11 +30,11 @@
 
     ![Choose Web Platform](images/choosewebplatform.png)
 
-1. Make sure the Allow Implicit Flow check box is selected, and enter https://localhost:44382/Home.html as the Redirect URI.
+1. Make sure the Allow Implicit Flow check box is selected, and enter [https://localhost:44382/Home.html](https://localhost:44382/Home.html) as the Redirect URI.
 
 1. In Microsoft Graph Permissions, next to Delegated Permissions, click "Add"
 
-1. Add the permissions so they match the following: 
+1. Add the permissions so they match the following screen shot.
 
        ![Graph permissions](images/finalgraphpermissions.png)
 
@@ -42,17 +42,17 @@
 
 ## Get the Planner Task URL from your tenant
 
-1. Use Notepad to open `PlannerSetupInfo.txt` in the root of the repo. Then log into your tenant
+1. Use Notepad to open `PlannerSetupInfo.txt` in the `/setup` folder of the repo. Then sign in to your tenant.
 
     ![Log into your tenant](images/tenantlogin.png)
 
-1. Open the Planner app:
+1. Open the **Planner** app.
 
     ![Open Planner](images/openplanner.png)
 
 1. In the address bar of the browser, copy the full URL. This will be the **(2) tenant-specific base URL** for use later in the code:
 
-## Update the code for your tenant:
+## Update the code for your tenant
 
 1. In the tasker.sln solution in Visual Studio, go to the top of taskerWeb/home.js
 
@@ -69,7 +69,7 @@ var plannerTaskUrl = "<<Planner URL goes here>>";
 
 1. Using the two numbered items in your Notepad file, update the initialization values for these two variables.
 
-# You are now ready to build the Proseware Tasks sample add-in
+## You are now ready to build the Proseware Tasks sample add-in
 
 1. In Visual Studio, right click on "taskerWeb" project name in Solution Explorer and select "**Set as StartUp Project**":
 
@@ -79,7 +79,7 @@ var plannerTaskUrl = "<<Planner URL goes here>>";
 
     ![Set Startup action to Specific page](images/specificpage.png)
 
-1. Hit Ctrl-F5 to start without debugging. You should see the Home.html signon button:
+1. Press **Ctrl-F5** to start without debugging. You should see the `Home.html` **Sign in** button.
 
     ![Home.html page in browser](images/ctrlf5home.png)
 
@@ -87,7 +87,7 @@ var plannerTaskUrl = "<<Planner URL goes here>>";
 
     ![Sideload the Add-in](images/sideload.png)
 
-1. Once you see Proseware Tasks in the command bar, open the add-in and sign in: 
+1. Once you see Proseware Tasks in the command bar, open the add-in and sign in.
 
     ![Proseware Tasks command button](images/prosewaretasks.png)
 
