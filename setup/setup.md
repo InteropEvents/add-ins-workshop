@@ -18,31 +18,31 @@
 
 1. The registration page displays, listing the properties of your app.
 
-1. **IMPORTANT:** Copy the *Application Id* and save it in Notepad. This is the unique identifier for your app. You'll use this **(*) AppId** value to configure your app.
+1. **IMPORTANT:** Copy the *Application Id* and save it to a text file. This is the unique identifier for your app. You'll use the **(*) AppId** value later to configure your app.
 
     ![Copy the AppId](images/copytheappid.png)
 
-1. Under Platforms, choose Add Platform.
+1. Under **Platforms**, choose **Add Platform**.
 
     ![Add a Platform](images/addaplatform.png)
 
-1. Choose Web.
+1. Choose **Web**.
 
     ![Choose Web Platform](images/choosewebplatform.png)
 
-1. Make sure the Allow Implicit Flow check box is selected, and enter [https://localhost:44382/Home.html](https://localhost:44382/Home.html) as the Redirect URI.
+1. Make sure the **Allow Implicit Flow** check box is selected, and enter [https://localhost:44382/Home.html](https://localhost:44382/Home.html) as the **Redirect URI**.
 
-1. In Microsoft Graph Permissions, next to Delegated Permissions, click "Add"
+1. In **Microsoft Graph Permissions**, next to **Delegated Permissions**, click **Add**.
 
 1. Add the permissions so they match the following screen shot.
 
        ![Graph permissions](images/finalgraphpermissions.png)
 
-1. Choose Save.
+1. Choose **Save**.
 
 ## Get the Planner Task URL from your tenant
 
-1. Use Notepad to open `PlannerSetupInfo.txt` in the `/setup` folder of the repo. Then sign in to your tenant.
+1. Use a text editor, such as Notepad, to open `PlannerSetupInfo.txt` in the `/setup` folder of the repo. Then browse to [http://office.com/apps](http://office.com/apps) and sign in to your tenant.
 
     ![Log into your tenant](images/tenantlogin.png)
 
@@ -50,13 +50,13 @@
 
     ![Open Planner](images/openplanner.png)
 
-1. In the address bar of the browser, copy the full URL. This will be the **(2) tenant-specific base URL** for use later in the code:
+1. In the address bar of the browser, copy the full URL. This will be the **(2) tenant-specific base URL** for use later in the code.
 
 ## Update the code for your tenant
 
-1. In the tasker.sln solution in Visual Studio, go to the top of taskerWeb/home.js
+1. In the `tasker.sln` solution in Visual Studio, go to the top of `taskerCode/taskerWeb/home.js`.
 
-1. There are two variables at the top of home.js that look like this:
+1. There are two variables at the top of `home.js` that look like the code below.
 
 ```js
 // Per tenant variables to update when building against a new tenant.
@@ -67,11 +67,11 @@ var plannerTaskUrl = "<<Planner URL goes here>>";
 
 ```
 
-1. Using the two numbered items in your Notepad file, update the initialization values for these two variables.
+1. Using the two numbered items in your text file, update the initialization values for these two variables.
 
 ## You are now ready to build the Proseware Tasks sample add-in
 
-1. In Visual Studio, right click on "taskerWeb" project name in Solution Explorer and select "**Set as StartUp Project**":
+1. In Visual Studio, right click on the `taskerWeb` project name in **Solution Explorer** and select **Set as StartUp Project**.
 
 ![Set Web Project as Startup](images/setasstartupproject.png)
 
@@ -83,11 +83,13 @@ var plannerTaskUrl = "<<Planner URL goes here>>";
 
     ![Home.html page in browser](images/ctrlf5home.png)
 
-1. Side load the add-in in Word, pointing to the tasker.xml manifest in the project:
+1. Open [Microsoft Word Online](https://www.office.com/launch/word?auth=2) and open a **New blank document**.
+
+1. [Side load the add-in in Word](https://docs.microsoft.com/en-us/office/dev/add-ins/testing/sideload-office-add-ins-for-testing#sideload-an-office-add-in-on-office-online), uploading the `tasker.xml` manifest file in the `taskerCode/tasker/taskerManifest` folder in the project.
 
     ![Sideload the Add-in](images/sideload.png)
 
-1. Once you see Proseware Tasks in the command bar, open the add-in and sign in.
+1. Once you see **Proseware Tasks** in the command bar, open the add-in, sign in, and accept the permissions.
 
     ![Proseware Tasks command button](images/prosewaretasks.png)
 
