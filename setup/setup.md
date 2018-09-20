@@ -2,9 +2,10 @@
 
 ## Register the application to use Graph
 
-1. Sign into the Application Registration Portal  - [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com) - using "work or school account".
+1. Sign into the Application Registration Portal  - [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com) - using  your tenant account and select "work or school account".
 
     ![Sign in to your tenant](images/signintoyourtenant.png)
+    ![Sign in to your tenant](images/workorschoolaccount.png)
 
 1. Sign into your tenant (i.e. [user]@[tenant].onmicrosoft.com, [password])
 
