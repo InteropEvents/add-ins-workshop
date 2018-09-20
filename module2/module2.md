@@ -32,11 +32,14 @@ and add the following:
 ```js
     // Only move forward if we're in Excel
     if (Office.context.host == Office.HostType.Excel)
+    {
+
+    }
 ```
 
 Notice that we are now inside a block that identifies the "Host" of this add-in as Excel!
 
-2. Add the following `Excel.run` block:
+2. Add the following `Excel.run` block inside the above if statement's curly braces:
 
 ```js
     Excel.run(function (context) {
@@ -92,6 +95,7 @@ The final `registerExcelEvents` function should look like this:
 
     // Only move forward if we're in Excel
     if (Office.context.host == Office.HostType.Excel)
+    {
         Excel.run(function (context) {
             var worksheets = context.workbook.worksheets;
             worksheets.load('items');
@@ -109,7 +113,7 @@ The final `registerExcelEvents` function should look like this:
         }).catch(function (event) {
             console.log("Event register failed:" + event.message + ".");
         });
-
+    }
     // ===== END =====
 ```
 
