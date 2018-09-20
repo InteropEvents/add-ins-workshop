@@ -1,42 +1,43 @@
 # Taipei DevDays 2018 add-ins-workshop
+
+## Contents
+
+- [Extend the functionality of the Office Apps with Add-ins (Word, Excel, PowerPoint, OneNote) workshop](#extend-the-functionality-of-the-office-apps-with-add-ins-word-excel-powerpoint-onenote-workshop)
+- [What does the add-in do?](#what-does-the-add-in-do)
+- [Prerequisites](#prerequisites)
+- [How do I get started?](#how-do-i-get-started)
+
 ## Extend the functionality of the Office Apps with Add-ins (Word, Excel, PowerPoint, OneNote) workshop
 
 In this repo there is a sample Office add-in and tutorial modules that guide the user to add Word and Excel specific code to complete the functionality.
 
-## What does the add-in do? 
+## What the add-in does
 
-Proseware Tasker is a collaborative tool for teams that share authoring responsibility for Word, Excel and PowerPoint documents between members of the team or even different teams. 
+_Proseware Tasker_ is a collaborative tool for teams that share authoring responsibility for Word, Excel and PowerPoint documents between members of the team or even different teams.
 
-Tasks can be created and assigned as well as managed in a simple but powerful list format, right inside the document edit session.
+You can create, assign, and manage tasks right inside the document edit session using a simple, but powerful list format.
 
 ![Task creation screenshot](screenshot-createtask.png)
 
 ## Prerequisites
 
-- Office account tenant for your team.
+- Office account tenant for your team
 - Visual Studio (Community is fine)
-- git command line tools 
-- web browser (Chrome or Edge are fine)
+- Git command line tools
+- Web browser (Chrome or Edge are fine)
 
-## How do I get started? 
+## Get started
 
-1. Start by cloning this whole repo to your local system.
+1. Start by cloning this whole repository to your local system.
 
-```
-git clone https://github.com/InteropEvents/add-ins-workshop.git
-```
+    `git clone https://github.com/InteropEvents/add-ins-workshop.git`
 
-2. Next get your tenant and Planner ready for the add-in by following the steps in [the setup document.](setup/setup.md) 
+1. Get your tenant and _Planner_ ready for the add-in by following the steps in [the setup document](setup/setup.md).
 
-3. At this point, you can open tasker.sln in Visual Studio and build it. 
-    - You may need to restore nuget packages. Refer to [Package Restore](https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore) 
-    - Set taskerWeb to the default startup project
-    - Start without debugging (Ctrl-F5) to run IISExpress hosting the web code.
+    **Tip**: Avoid path length issues with packages by cloning the repository low in the file hierarchy, like `c:\myrepos` or something with a similarly short path length.
 
-    TIP: avoid path length issues with packages by cloning the repo low in the file hierarchy like c:\myrepos or something. 
+## Follow the tutorial
 
-4. Side load this add-in using the tasker/tasker/taskerManifest/tasker.xml. Refer to [Sideload Office Add-ins for testing](https://docs.microsoft.com/en-us/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins) for instructions on sideloading.
+1. Now you are ready to follow the tutorial. Start with [Module 1](module1/module1.md), which walks you through adding Word-specific code to the task creation process in _Proseware Tasker_.
 
-5. Now you are ready to follow the tutorial. Start with [Module 1](module1/module1.md). This walks through adding Word specific code to task creation process in Proseware Tasks.
-
-6. Then complete the tutorial by following [Module 2](module2/module2.md). This adds Excel specific code.  
+1. Complete the tutorial by following [Module 2](module2/module2.md). This adds Excel-specific code.

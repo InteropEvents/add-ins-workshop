@@ -72,6 +72,8 @@ var plannerTaskUrl = "<<Planner URL goes here>>";
 
 ## You are now ready to build the Proseware Tasks sample add-in
 
+**Note:** You may need to restore nuget packages. Refer to [Package Restore](https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore) for information about restoring the nuget packages.
+
 1. In Visual Studio, right click on the `taskerWeb` project name in **Solution Explorer** and select **Set as StartUp Project**.
 
 ![Set Web Project as Startup](images/setasstartupproject.png)
