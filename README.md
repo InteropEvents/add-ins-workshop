@@ -3,9 +3,10 @@
 ## Contents
 
 - [Extend the functionality of the Office Apps with Add-ins (Word, Excel, PowerPoint, OneNote) workshop](#extend-the-functionality-of-the-office-apps-with-add-ins-word-excel-powerpoint-onenote-workshop)
-- [What does the add-in do?](#what-does-the-add-in-do)
+- [What the add-in does](#what-the-add-in-does)
 - [Prerequisites](#prerequisites)
-- [How do I get started?](#how-do-i-get-started)
+- [Get started](#get-started)
+- [Follow the tutorial](#follow-the-tutorial)
 
 ## Extend the functionality of the Office Apps with Add-ins (Word, Excel, PowerPoint, OneNote) workshop
 

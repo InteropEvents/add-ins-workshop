@@ -1,5 +1,12 @@
 # Setup Instructions for Proseware Tasks Sample
 
+## Contents
+
+- [Register the application to use Graph](#register-the-application-to-use-graph)
+- [Get the Planner Task URL from your tenant](#get-the-planner-task-url-from-your-tenant)
+- [Update the code for your tenant](#update-the-code-for-your-tenant)
+- [You are now ready to build the Proseware Tasks sample add-in](#you-are-now-ready-to-build-the-proseware-tasks-sample-add-in)
+
 ## Register the application to use Graph
 
 1. Sign into the Application Registration Portal  - [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com) - using  your tenant account and select "work or school account" if prompted:
