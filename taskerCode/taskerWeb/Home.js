@@ -152,7 +152,10 @@ var bucketName = "TaskerBucket";
             var tertiaryTextStyle = '';
             var actionDiv = '';
             var title = task.title;
-            var description = task.tasker_detail.description;
+            if (task.tasker_detail !== null)
+                var description = task.tasker_detail.description;
+            else
+                description = " ";
             var dueDate = new Date(task.dueDateTime);
             var liId = "otherdoc";
             var bgColor = "background-color:white";
@@ -257,7 +260,7 @@ var bucketName = "TaskerBucket";
                 </div>\
               </div>';
 
-           return '<li id="li' + liId + '" class= "ms-ListItem ' + isUnread + ' ms-ListItem--image ms-CalloutTaskDescription" tabindex = "0" style = "' + bgColor + '"><div  id="lm' + liId + '" class= "ms-ListItem-image" style = "'+ bgColor + '; width:20px;height:20px" >\
+            return '<li id="li' + liId + '" class= "ms-ListItem ' + isUnread + ' ms-ListItem--image ms-CalloutTaskDescription" tabindex = "0" style = "' + bgColor + '"><div  id="lm' + liId + '" class= "ms-ListItem-image" style = "' + bgColor + '; width:20px;height:20px" >\
                 <img id="oi' + liId + '" src = ' + svgOrgOriginIcon + ' style = "' + bgColor + '; width:20px;height:20px" />\
                 </div ><span  id="pr' + liId + '" class="ms-ListItem-primaryText" style="' + primaryTextStyle + isUnread + '">' + title + '</span>\
                 <span  id="se' + liId + '" class= "ms-ListItem-secondaryText " style="' + secondaryTextStyle + '">' + description.substring(0, 30) + '... </span >\
@@ -535,56 +538,72 @@ var bucketName = "TaskerBucket";
 
                             $('#myPeopleResultGroup').append(meDiv);
 
-                            CreateorRetrievePlan();
+                            CreateOrRetrievePlan();
 
-                            client
-                                .api('/me/planner/tasks')
-                                .get().then(function (res) {
-                                    console.log(res); // print out the tasks collection
-                                    currentTasks = res;
+                            // we're polling because we're waiting on planId to be filled in.
+                            poll(function () {
+                                return client
+                                    .api('/planner/plans/' + planId + '/tasks')
+                                    //.api('/me/planner/tasks')
+                                    .get();
+                            }, 3000, 150, function (res) {
+                                return res.value.every(task => { return task.hasDescription; });
+                            }).then(function (res) {
+                                console.log(res); // print out the tasks collection
+                                currentTasks = res;
 
-                                    // Take an array of promises and wait on them all
-                                    return Promise.all(
+                                // Take an array of promises and wait on them all
+                                return Promise.all(
 
-                                        // Map array of tasks to an array of detail promises
-                                        currentTasks.value.map(function (task) {
-                                            // Make sure we have a details object.
-                                            if (task.hasDescription)
+                                    // Map array of tasks to an array of detail promises
+                                    currentTasks.value.map(function (task) {
+                                        // Make sure we have a details object.
+                                        if (task.hasDescription) {
+
+                                            return poll(function () {
+                                                //return axios.get('something.json');
                                                 return client
                                                     .api('/planner/tasks/' + task.id + '/details')
                                                     .get();
-                                            else
-                                                // We should not get here.
-                                                return Promise.resolve(null);
-                                        }));
+                                            }, 3000, 150, function (response) {
+                                                if (response.description !== null)
+                                                    return true;
+                                                else
+                                                    return false;
+                                            });
+                                        }
+                                        else
+                                            // We should not get here.
+                                            return Promise.resolve(null);
+                                    }));
 
-                                }).then(function (details) {
+                            }).then(function (details) {
 
-                                    var index = 0;
-                                    details.forEach(function (detail) {
-                                        // …and add to each of the corresponding tasks.
-                                        currentTasks.value[index++].tasker_detail = detail;
-                                    });
+                                var index = 0;
+                                details.forEach(function (detail) {
+                                    // …and add to each of the corresponding tasks.
+                                    currentTasks.value[index++].tasker_detail = detail;
+                                });
 
-                                    // Update our pivot list with all the tasks.
-                                    updateListView();
+                                // Update our pivot list with all the tasks.
+                                updateListView();
 
-                                    //$('#divTaskListView').show(0, loadContextData);
+                                //$('#divTaskListView').show(0, loadContextData);
 
-                                }).catch(function (err) {
-                                    // catch any error that happened so far
-                                    console.log("Error: " + err.message);
+                            }).catch(function (err) {
+                                // catch any error that happened so far
+                                console.log("Error: " + err.message);
 
-                                }).then(function () {
+                            }).then(function () {
 
-                                })
+                            })
                         });
                 }
             })
             .catch(function (error) { /* handle error here */ });
     }
 
-    function CreateorRetrievePlan() {
+    function CreateOrRetrievePlan() {
 
         // Flow : Create Group - > Add Yourself -> Create Plan -> Create Bucket
 
@@ -719,16 +738,18 @@ var bucketName = "TaskerBucket";
     }
 
     // The polling function
-    function poll(fn, timeout, interval) {
+    function poll(fn, timeout, interval, respTest) {
         var endTime = Number(new Date()) + (timeout || 2000);
         interval = interval || 100;
+        if (typeof respTest === 'undefined' || respTest === null)
+            respTest = function (response) { return true; };
 
         var checkCondition = function (resolve, reject) {
             var ajax = fn();
             // dive into the ajax promise
             ajax.then(function (response) {
                 // If the condition is met, we're done!
-                if (response != null) {
+                if ((response !== null) && (respTest(response))) {
                     resolve(response);
                 }
 
