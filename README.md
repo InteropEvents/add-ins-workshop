@@ -1,4 +1,4 @@
-# Taipei DevDays 2018 add-ins-workshop
+# Microsoft 365 DevDays add-ins-workshop
 
 ## Contents
 
