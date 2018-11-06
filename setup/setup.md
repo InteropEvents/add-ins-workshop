@@ -44,7 +44,7 @@
 
 1. Add the permissions so they match the following screen shot.
 
-       ![Graph permissions](images/finalgraphpermissions.png)
+    ![Graph permissions](images/finalgraphpermissions.png)
 
 1. Choose **Save**.
 
