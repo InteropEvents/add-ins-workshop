@@ -32,7 +32,7 @@ Notice that we are now inside a switch statement that identifies the "Host" of t
 
 **Everything we do to the document using Word JavaScript APIs will happen inside this block.**
 
-3. Now add the code to call `addFromSelectionAsync`:
+3. Now add the code to call `addFromSelectionAsync` in the `Word.run` block from the previuos step so it looks like this:
 
 ```js
                 Word.run(function (context) {
@@ -63,7 +63,7 @@ Notice that we are now inside a switch statement that identifies the "Host" of t
 ```
 At this point, we have made a binding, named with a previously computed value (`uniqueBindId`), which we can later use to navigate in the document. We also added a `catch` call on the result of `Word.run` so we know if something went wrong in any of the code in `Word.run`.
 
-4. **Following the `addFromSelectionAsync` call, add a call to `getSelection`** so we can create a content control around it.
+4. **Following the `addFromSelectionAsync` call in the previous step, add a call to `getSelection`** so we can create a content control around it.
 
 ```js
                     // Queue a command to get the current selection and then
