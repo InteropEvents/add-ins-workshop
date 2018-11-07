@@ -32,7 +32,7 @@ Notice that we are now inside a switch statement that identifies the "Host" of t
 
 **Everything we do to the document using Word JavaScript APIs will happen inside this block.**
 
-3. Now add the code to call `addFromSelectionAsync` in the `Word.run` block from the previuos step so it looks like this:
+3. Now add the code to call `addFromSelectionAsync` in the `Word.run` block from the previous step so it looks like this:
 
 ```js
                 Word.run(function (context) {
