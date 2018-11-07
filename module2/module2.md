@@ -1,14 +1,14 @@
 # Module 2: Excel API
 
-In this module, you will add javascript code specific to Excel. This code will load the worksheets collection of the workbook and add an `onChanged` event handler for each sheet. This will allow tasker to monitor changes to any cells and update tasks that reference those cells, notifying the user that the task may not be current.
+In this module, you will add JavaScript code specific to Excel. This code will load the worksheets collection of the workbook and add an `onChanged` event handler for each sheet. This will allow tasker to monitor changes to any cells and update tasks that reference those cells, notifying the user that the task may not be current.
 
-## API's Used In This Module
+## APIs Used In This Module
 
 - `Excel.run` 
 - `context.workbook.worksheets`
 - `worksheet.onChanged`
 
-For information about Events in Excel, see: 
+For information about events in Excel, see: 
 
 
 [Work with Events using the Excel JavaScript API](
@@ -16,18 +16,18 @@ https://docs.microsoft.com/en-us/office/dev/add-ins/excel/excel-add-ins-events)
 
 [Excel API Requirement Sets](https://dev.office.com/reference/add-ins/requirement-sets/excel-api-requirement-sets?product=excel)
 
-## Step 1: The Excel.run block
+## Step 1: The `Excel.run` block
 
-All Excel-specific API's must be enclosed in a callback function passed to `Excel.run()`. Variables must be used inside the callback function scope or there are limitations and special code that must be used to make them accessible. So let's stick with keeping everything in scope. 
+All Excel-specific APIs must be enclosed in a callback function passed to `Excel.run()`. Variables must be used inside the callback function scope or there are limitations and special code that must be used to make them accessible. So let's stick with keeping everything in scope. 
 
-1. Find the code in `taskerWeb/home.js` that has this comment:
+1. **Find the code in `taskerWeb/home.js` that has this comment:**
 
 ```js
     // ====== START ======
     // Workshop module 2 code goes here:
 ```
 
-and add the following: 
+**and add the following:** 
 
 ```js
     // Only move forward if we're in Excel
@@ -39,16 +39,16 @@ and add the following:
 
 Notice that we are now inside a block that identifies the "Host" of this add-in as Excel!
 
-2. Add the following `Excel.run` block inside the above if statement's curly braces:
+2. **Add the following `Excel.run` block inside the above `if` statement's curly braces:**
 
 ```js
     Excel.run(function (context) {
     });
 ```
 
-Everything we do to the worksheet using Excel javascript API's will happen inside this block.
+**Everything we do to the worksheet using Excel JavaScript APIs will happen inside this block.**
 
-3. Now add the code to get the worksheets collection of this workbook:
+3. **Now add the code to get the worksheets collection of this workbook:**
 
 ```js
     Excel.run(function (context) {
@@ -65,14 +65,14 @@ Everything we do to the worksheet using Excel javascript API's will happen insid
 At this point, we have a worksheets collection that is a proxy object and needs to be synchronized with the Excel backend. We need the items property of the worksheets collection so we've added the `load()` call to queue a batch request to fill it.
 
 
-4. Before we can use the worksheets collection to register our event handlers, we need to synchronize the proxy object with Excel on the backend. Now, replace the comment `// ... more code ...` with the following `context.sync()` call:
+4. Before we can use the worksheets collection to register our event handlers, we need to synchronize the proxy object with Excel on the backend. **Now, replace the comment `// ... more code ...` with the following `context.sync()` call:**
 
 ```js
     return context.sync().then(function () {
     // ... register handler here ...
     });
 ```
-5. Now replace the comment `// ... register handler here ...` with the following block: 
+5. **Now replace the comment `// ... register handler here ...` with the following block:** 
 
 ```js
     for (var i = 0; i < worksheets.items.length; i++) {
@@ -87,7 +87,7 @@ At this point, we have a worksheets collection that is a proxy object and needs 
 ```
 In this block, we output some debug info so you can see the worksheet being worked on. Then we call the `onChanged.add()` method on each worksheet. The subsequent `context.sync()` call connect the event handler to Excel's backend so the handler can notify us not only what happens here in this user session, but also co-authoring remote sessions.
 
-The final `registerExcelEvents` function should look like this: 
+**The final `registerExcelEvents` function should look like this:** 
 
 ```js
     // ====== START ======
