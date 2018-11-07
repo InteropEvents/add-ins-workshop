@@ -40,7 +40,15 @@
 
 1. Make sure the **Allow Implicit Flow** check box is selected, and enter [https://localhost:44382/Home.html](https://localhost:44382/Home.html) as the **Redirect URI**.
 
-1. In **Microsoft Graph Permissions**, next to **Delegated Permissions**, click **Add**.
+1. ADVANCED: Go to Step 13 - We will leave the permissions as the default `User.Read` and then in code, we will use the `OfficeHelpers.Authenticator` `scope` parameter to configure what we need to create tasks and such. The permissions should look like this: 
+
+    ![Graph permissions](images/defaultgraphpermissions.png)
+    Information only: the code to set the scope (permissions) at runtime will look like this in Home.js:
+
+    ![Graph permissions](images/codegraphscope.png)
+
+
+1. ALTERNATE: Do these steps if you want to use App Registration to completely configure Graph Permissions and *not* use code. In **Microsoft Graph Permissions**, next to **Delegated Permissions**, click **Add**.
 
 1. Add the permissions so they match the following screen shot.
 
