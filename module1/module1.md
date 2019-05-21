@@ -4,11 +4,11 @@ In this module, you will add JavaScript code specific to Word API for Office Add
 
 ## APIs Used In This Module
 
-- `Word.run` 
-- `addFromSelectionAsync`
-- `getSelection`
-- `range` 
-- `range.insertContentControl`
+- [Word.run](https://docs.microsoft.com/en-us/office/dev/add-ins/reference/overview/word-add-ins-reference-overview#running-word-add-ins) 
+- [addFromSelectionAsync](https://docs.microsoft.com/en-us/javascript/api/office/office.bindings?view=office-js#addfromselectionasync-bindingtype--callback-)
+- [getSelection](https://docs.microsoft.com/en-us/javascript/api/word/word.document?view=office-js#getselection--)
+- [range](https://docs.microsoft.com/en-us/javascript/api/word/word.range?view=office-js)
+- [range.insertContentControl](https://docs.microsoft.com/en-us/javascript/api/word/word.range?view=office-js#insertcontentcontrol--)
 
 ## Step 1: The `Word.run` block
 
