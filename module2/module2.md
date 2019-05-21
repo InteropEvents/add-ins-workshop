@@ -4,9 +4,9 @@ In this module, you will add JavaScript code specific to Excel. This code will l
 
 ## APIs Used In This Module
 
-- `Excel.run` 
-- `context.workbook.worksheets`
-- `worksheet.onChanged`
+- [Excel.run](https://docs.microsoft.com/en-us/office/dev/add-ins/excel/excel-add-ins-core-concepts#excelrun)
+- [context.workbook.worksheets](https://docs.microsoft.com/en-us/javascript/api/excel/excel.worksheet?view=office-js)
+- [worksheet.onChanged](https://docs.microsoft.com/en-us/javascript/api/excel/excel.worksheet?view=office-js#onchanged)
 
 For information about events in Excel, see: 
 
